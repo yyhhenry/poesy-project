@@ -1,0 +1,21 @@
+server:
+  port: 8080
+
+spring:
+  main:
+    web-application-type: reactive
+
+  application:
+    name: poesy-gateway
+
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+
+      routes: []
