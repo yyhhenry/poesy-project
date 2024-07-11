@@ -7,16 +7,17 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-import cn.d619.poesy.user.pojo.po.PendingUserPO;
+import cn.d619.poesy.user.pojo.po.UserVerificationPO;
 
 @Configuration
 public class RedisConfig {
     @Bean
-    RedisTemplate<String, PendingUserPO> redisTemplate(RedisConnectionFactory connectionFactory) {
-        RedisTemplate<String, PendingUserPO> template = new RedisTemplate<>();
+    RedisTemplate<String, UserVerificationPO> redisTemplate(RedisConnectionFactory connectionFactory) {
+        RedisTemplate<String, UserVerificationPO> template = new RedisTemplate<>();
         template.setConnectionFactory(connectionFactory);
 
-        Jackson2JsonRedisSerializer<PendingUserPO> serializer = new Jackson2JsonRedisSerializer<>(PendingUserPO.class);
+        Jackson2JsonRedisSerializer<UserVerificationPO> serializer = new Jackson2JsonRedisSerializer<>(
+                UserVerificationPO.class);
 
         template.setValueSerializer(serializer);
         template.setKeySerializer(new StringRedisSerializer());

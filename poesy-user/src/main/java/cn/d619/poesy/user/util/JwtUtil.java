@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import cn.d619.poesy.user.exception.AuthException;
+import cn.d619.poesy.user.pojo.dto.TokenInfoDTO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -55,15 +56,31 @@ public class JwtUtil {
     }
 
     public String getEmailFromToken(String token) {
-        String email = Jwts.parserBuilder()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(token)
-                .getBody()
-                .getSubject();
-        if (email == null) {
-            throw new AuthException("Invalid token subject");
+        try {
+            return Jwts.parserBuilder()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody()
+                    .getSubject();
+        } catch (Exception e) {
+            throw new AuthException("Invalid token");
         }
-        return email;
+    }
+
+    public TokenInfoDTO getTokenInfo(String token) {
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+            TokenInfoDTO tokenInfo = new TokenInfoDTO();
+            tokenInfo.setEmail(claims.getSubject());
+            tokenInfo.setExpireTime(claims.getExpiration().getTime());
+            return tokenInfo;
+        } catch (Exception e) {
+            throw new AuthException("Invalid token");
+        }
     }
 }
