@@ -1,4 +1,5 @@
 -- Create the database and the user table
+DROP DATABASE IF EXISTS `poesy`;
 CREATE DATABASE IF NOT EXISTS `poesy`;
 USE `poesy`;
 -- Create the user table
@@ -24,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `question` (
     `title` VARCHAR(255) NOT NULL,
     `content` TEXT NOT NULL,
     `author-email` VARCHAR(255) NOT NULL,
-    `createdtime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `created-time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`author-email`) REFERENCES `user`(`email`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
@@ -35,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `article` (
     `title` VARCHAR(255) NOT NULL,
     `content` TEXT NOT NULL,
     `author-email` VARCHAR(255) NOT NULL,
-    `createdtime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `created-time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`author-email`) REFERENCES `user`(`email`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
@@ -46,31 +47,31 @@ CREATE TABLE IF NOT EXISTS `answer` (
     `content` TEXT NOT NULL,
     `author-email` VARCHAR(255) NOT NULL,
     `question-id` VARCHAR(36) NOT NULL,
-    `createdtime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `created-time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`author-email`) REFERENCES `user`(`email`) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (`question-id`) REFERENCES `question`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
--- Create the answercomment table
-CREATE TABLE IF NOT EXISTS `answercomment` (
+-- Create the answer-comment table
+CREATE TABLE IF NOT EXISTS `answer-comment` (
     -- use uuid for id
     `id` VARCHAR(36) NOT NULL,
     `content` TEXT NOT NULL,
     `author-email` VARCHAR(255) NOT NULL,
     `answer-id` VARCHAR(36) NOT NULL,
-    `createdtime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `created-time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`author-email`) REFERENCES `user`(`email`) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (`answer-id`) REFERENCES `answer`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
--- Create the articlecomment table
-CREATE TABLE IF NOT EXISTS `articlecomment` (
+-- Create the article-comment table
+CREATE TABLE IF NOT EXISTS `article-comment` (
     -- use uuid for id
     `id` VARCHAR(36) NOT NULL,
     `content` TEXT NOT NULL,
     `author-email` VARCHAR(255) NOT NULL,
     `article-id` VARCHAR(36) NOT NULL,
-    `createdtime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `created-time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`author-email`) REFERENCES `user`(`email`) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (`article-id`) REFERENCES `article`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
