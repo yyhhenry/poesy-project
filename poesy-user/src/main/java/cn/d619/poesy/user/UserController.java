@@ -3,7 +3,9 @@ package cn.d619.poesy.user;
 import org.springframework.web.bind.annotation.RestController;
 
 import cn.d619.poesy.user.pojo.dto.MsgDTO;
+import cn.d619.poesy.user.pojo.dto.RefreshRequest;
 import cn.d619.poesy.user.pojo.dto.RegisterRequest;
+import cn.d619.poesy.user.pojo.dto.TokenPair;
 import cn.d619.poesy.user.pojo.dto.VerifyRequest;
 import cn.d619.poesy.user.service.UserService;
 
@@ -23,9 +25,22 @@ public class UserController {
     }
 
     @PostMapping("/api/user/verify")
-    public MsgDTO verify(@RequestBody VerifyRequest verifyRequest) {
-        userService.verifyUser(verifyRequest.getEmail(), verifyRequest.getCode());
-        return new MsgDTO("User verified successfully");
+    public TokenPair verify(@RequestBody VerifyRequest verifyRequest) {
+        String email = verifyRequest.getEmail();
+        userService.verifyUser(email, verifyRequest.getCode());
+        return userService.generateTokenPair(email);
+    }
+
+    @PostMapping("/api/user/login")
+    public TokenPair login(@RequestBody RegisterRequest loginRequest) {
+        String email = loginRequest.getEmail();
+        userService.verifyUser(email, loginRequest.getPassword());
+        return userService.generateTokenPair(email);
+    }
+
+    @PostMapping("/api/user/refresh")
+    public TokenPair refresh(@RequestBody RefreshRequest refreshRequest) {
+        return userService.refreshToken(refreshRequest.getRefreshToken());
     }
 
 }
