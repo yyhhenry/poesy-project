@@ -50,7 +50,7 @@ public class UserController {
     @PostMapping("/api/user/login")
     public TokenPair login(@RequestBody RegisterRequest loginRequest) {
         String email = loginRequest.getEmail();
-        userService.verifyUser(email, loginRequest.getPassword());
+        userService.login(email, loginRequest.getPassword());
         return userService.generateTokenPair(email);
     }
 
