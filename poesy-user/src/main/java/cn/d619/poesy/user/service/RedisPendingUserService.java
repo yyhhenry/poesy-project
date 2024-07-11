@@ -24,7 +24,7 @@ public class RedisPendingUserService {
             throw new RuntimeException("Redis error");
         }
         if (result.equals(true)) {
-            redisTemplate.expire(key, 5 * 60, java.util.concurrent.TimeUnit.SECONDS);
+            redisTemplate.expire(key, 2 * 60, java.util.concurrent.TimeUnit.SECONDS);
             return true;
         }
         return false;
