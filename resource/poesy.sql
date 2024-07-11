@@ -8,6 +8,8 @@ CREATE TABLE IF NOT EXISTS `user` (
     -- Avatar will be got from gravatar
     PRIMARY KEY (`email`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+-- In redis we have `pending-user` for users who have not activated their account
+-- "pending-user:<email>" -> {password: <password>, code: <code>}
 -- Create the image table
 CREATE TABLE IF NOT EXISTS `image` (
     -- use uuid for id
@@ -68,5 +70,3 @@ CREATE TABLE IF NOT EXISTS `articlecomment` (
     FOREIGN KEY (`author-email`) REFERENCES `user`(`email`) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (`article-id`) REFERENCES `article`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
--- In redis we have `pending-user` for users who have not activated their account
--- "pending-user:<email>" -> {password: <password>, code: <code>}
