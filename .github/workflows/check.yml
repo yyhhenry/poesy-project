@@ -19,5 +19,6 @@ jobs:
           java-version: '11'
       - name: Build with Maven
         run: |
+          cp .env.example .env
           mvn -B package --file poesy-gateway/pom.xml -DskipTests
           mvn -B package --file poesy-user/pom.xml -DskipTests
