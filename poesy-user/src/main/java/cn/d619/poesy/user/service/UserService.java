@@ -11,8 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.d619.poesy.user.exception.AuthException;
 import cn.d619.poesy.user.mapper.UserMapper;
+import cn.d619.poesy.user.pojo.dto.TokenInfoDTO;
 import cn.d619.poesy.user.pojo.dto.TokenPair;
-import cn.d619.poesy.user.pojo.po.PendingUserPO;
+import cn.d619.poesy.user.pojo.po.UserVerificationPO;
 import cn.d619.poesy.user.pojo.po.UserPO;
 import cn.d619.poesy.user.util.JwtUtil;
 
@@ -23,7 +24,7 @@ public class UserService {
     private UserMapper userMapper;
 
     @Autowired
-    private RedisPendingUserService redisPendingUserService;
+    private RedisUserVerificationService redisUserVerificationService;
 
     @Autowired
     private RedisRefreshTokenService redisRefreshTokenService;
@@ -39,6 +40,10 @@ public class UserService {
 
     private UserPO getUserByEmail(String email) {
         return userMapper.selectById(email);
+    }
+
+    public TokenInfoDTO getTokenInfo(String token) {
+        return jwtUtil.getTokenInfo(token);
     }
 
     public boolean userExists(String email) {
@@ -92,8 +97,8 @@ public class UserService {
             throw new AuthException("用户已存在");
         }
         String code = generateCode();
-        PendingUserPO pendingUserDTO = new PendingUserPO(email, encodedPassword, code);
-        if (redisPendingUserService.savePendingUser(pendingUserDTO)) {
+        UserVerificationPO userVerificationDTO = new UserVerificationPO(email, encodedPassword, code);
+        if (redisUserVerificationService.saveUserVerification(userVerificationDTO)) {
             emailService.sendVerificationEmail(email, code);
         } else {
             throw new AuthException("已有进行中的验证");
@@ -101,10 +106,12 @@ public class UserService {
     }
 
     public TokenPair generateTokenPair(String email) {
-        String accessToken = jwtUtil.generateToken(email, "access");
-        String refreshToken = jwtUtil.generateToken(email, "refresh");
+        Long accessExpireTime = jwtUtil.generateExpireTime("access");
+        String accessToken = jwtUtil.generateToken(email, "access", accessExpireTime);
+        Long refreshExpireTime = jwtUtil.generateExpireTime("refresh");
+        String refreshToken = jwtUtil.generateToken(email, "refresh", refreshExpireTime);
         redisRefreshTokenService.addRefreshToken(email, refreshToken);
-        TokenPair pair = new TokenPair(accessToken, refreshToken);
+        TokenPair pair = new TokenPair(accessToken, accessExpireTime, refreshToken);
         return pair;
     }
 
@@ -117,16 +124,16 @@ public class UserService {
 
     @Transactional
     public void verifyUser(String email, String code) {
-        PendingUserPO pendingUserDTO = redisPendingUserService.getPendingUser(email);
-        if (pendingUserDTO == null) {
+        UserVerificationPO userVerificationDTO = redisUserVerificationService.getUserVerification(email);
+        if (userVerificationDTO == null) {
             throw new AuthException("不存在待验证用户");
         }
-        if (!pendingUserDTO.getCode().equals(code)) {
+        if (!userVerificationDTO.getCode().equals(code)) {
             throw new AuthException("验证码错误");
         }
-        UserPO userPO = new UserPO(pendingUserDTO.getEmail(), pendingUserDTO.getPassword());
+        UserPO userPO = new UserPO(userVerificationDTO.getEmail(), userVerificationDTO.getPassword());
         userMapper.insert(userPO);
-        redisPendingUserService.deletePendingUser(email);
+        redisUserVerificationService.deleteUserVerification(email);
     }
 
     @Transactional

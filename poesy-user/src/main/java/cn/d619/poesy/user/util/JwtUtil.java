@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import cn.d619.poesy.user.exception.AuthException;
+import cn.d619.poesy.user.pojo.dto.TokenInfoDTO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -29,12 +30,15 @@ public class JwtUtil {
         key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String generateToken(String email, String type) {
-        long expirationTime = type.equals("refresh") ? REFRESH_EXPIRATION_TIME : ACCESS_EXPIRATION_TIME;
+    public Long generateExpireTime(String type) {
+        return System.currentTimeMillis() + (type.equals("refresh") ? REFRESH_EXPIRATION_TIME : ACCESS_EXPIRATION_TIME);
+    }
+
+    public String generateToken(String email, String type, Long ExpireTime) {
         return Jwts.builder()
                 .setSubject(email)
                 .claim("type", type)
-                .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
+                .setExpiration(new Date(ExpireTime))
                 .signWith(key)
                 .compact();
     }
@@ -55,15 +59,31 @@ public class JwtUtil {
     }
 
     public String getEmailFromToken(String token) {
-        String email = Jwts.parserBuilder()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(token)
-                .getBody()
-                .getSubject();
-        if (email == null) {
-            throw new AuthException("Invalid token subject");
+        try {
+            return Jwts.parserBuilder()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody()
+                    .getSubject();
+        } catch (Exception e) {
+            throw new AuthException("Invalid token");
         }
-        return email;
+    }
+
+    public TokenInfoDTO getTokenInfo(String token) {
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+            TokenInfoDTO tokenInfo = new TokenInfoDTO();
+            tokenInfo.setEmail(claims.getSubject());
+            tokenInfo.setExpireTime(claims.getExpiration().getTime());
+            return tokenInfo;
+        } catch (Exception e) {
+            throw new AuthException("Invalid token");
+        }
     }
 }

@@ -4,22 +4,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import cn.d619.poesy.user.pojo.po.PendingUserPO;
+import cn.d619.poesy.user.pojo.po.UserVerificationPO;
 
 @Service
-public class RedisPendingUserService {
+public class RedisUserVerificationService {
     @Autowired
-    private RedisTemplate<String, PendingUserPO> redisTemplate;
-
-    private static final String PENDING_USER_PREFIX = "pending-user:";
+    private RedisTemplate<String, UserVerificationPO> redisTemplate;
 
     public String keyFrom(String email) {
-        return PENDING_USER_PREFIX + email;
+        return "user-verification:" + email;
     }
 
-    public boolean savePendingUser(PendingUserPO pendingUserDTO) {
-        String key = keyFrom(pendingUserDTO.getEmail());
-        Boolean result = redisTemplate.opsForValue().setIfAbsent(key, pendingUserDTO);
+    public boolean saveUserVerification(UserVerificationPO userVerificationDTO) {
+        String key = keyFrom(userVerificationDTO.getEmail());
+        Boolean result = redisTemplate.opsForValue().setIfAbsent(key, userVerificationDTO);
         if (result == null) {
             throw new RuntimeException("Redis error");
         }
@@ -30,11 +28,11 @@ public class RedisPendingUserService {
         return false;
     }
 
-    public PendingUserPO getPendingUser(String email) {
+    public UserVerificationPO getUserVerification(String email) {
         return redisTemplate.opsForValue().get(keyFrom(email));
     }
 
-    public void deletePendingUser(String email) {
-        redisTemplate.delete("pending-user:" + email);
+    public void deleteUserVerification(String email) {
+        redisTemplate.delete(keyFrom(email));
     }
 }

@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 import cn.d619.poesy.user.pojo.dto.MsgDTO;
 import cn.d619.poesy.user.pojo.dto.RefreshRequest;
 import cn.d619.poesy.user.pojo.dto.RegisterRequest;
+import cn.d619.poesy.user.pojo.dto.TokenInfoDTO;
 import cn.d619.poesy.user.pojo.dto.TokenPair;
 import cn.d619.poesy.user.pojo.dto.UserExistsDTO;
 import cn.d619.poesy.user.pojo.dto.UserExistsRequest;
@@ -14,11 +15,19 @@ import cn.d619.poesy.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
 public class UserController {
     @Autowired
     private UserService userService;
+
+    @GetMapping("/api/user/info")
+    public TokenInfoDTO getTokenInfo(@RequestHeader("Authorization") String Auth) {
+        String token = Auth.substring(7); // remove "Bearer "
+        return userService.getTokenInfo(token);
+    }
 
     @PostMapping("/api/user/exists")
     public UserExistsDTO userExists(@RequestBody UserExistsRequest userExistsRequest) {
