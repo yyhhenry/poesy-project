@@ -1,6 +1,8 @@
 package cn.d619.poesy.user.service;
 
 import java.security.SecureRandom;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -52,8 +54,42 @@ public class UserService {
         return code.toString();
     }
 
+    private void checkEmail(String email) {
+        if (email == null || email.isEmpty()) {
+            throw new AuthException("Email is required");
+        }
+
+        // 定义邮箱格式的正则表达式
+        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+
+        // 编译正则表达式
+        Pattern pattern = Pattern.compile(emailRegex);
+
+        // 使用正则表达式匹配字符串
+        Matcher matcher = pattern.matcher(email);
+        if (!matcher.matches()) {
+            throw new AuthException("Email format is incorrect");
+        }
+    }
+
+    private void checkPassword(String password) {
+        if (password == null || password.isEmpty()) {
+            throw new AuthException("Password is required");
+        }
+
+        if (password.length() < 6) {
+            throw new AuthException("Password must be at least 6 characters long");
+        }
+
+        if (password.length() > 20) {
+            throw new AuthException("Password must be at most 20 characters long");
+        }
+    }
+
     @Transactional
     public void addUser(String email, String password) {
+        checkEmail(email);
+        checkPassword(password);
         String encodedPassword = passwordEncoder.encode(password);
         if (userExists(email)) {
             throw new AuthException("User already exists");

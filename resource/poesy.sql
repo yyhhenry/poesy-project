@@ -2,6 +2,7 @@
 CREATE DATABASE IF NOT EXISTS `poesy`;
 USE `poesy`;
 -- Create the user table
+DROP table IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
     `email` VARCHAR(255) NOT NULL,
     `password` VARCHAR(255) NOT NULL,

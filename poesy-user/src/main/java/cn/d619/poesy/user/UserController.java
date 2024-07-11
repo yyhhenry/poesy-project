@@ -12,11 +12,17 @@ import cn.d619.poesy.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
 public class UserController {
     @Autowired
     private UserService userService;
+
+    @GetMapping("/api/user/hello")
+    public String hello() {
+        return "Hello, user!";
+    }
 
     @PostMapping("/api/user/register")
     public MsgDTO register(@RequestBody RegisterRequest registerRequest) {
