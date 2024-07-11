@@ -15,6 +15,7 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>poesy-gateway</module>
+		<module>poesy-user</module>
 	</modules>
 	<name>poesy-project</name>
 	<description>Demo project for Spring Boot</description>
