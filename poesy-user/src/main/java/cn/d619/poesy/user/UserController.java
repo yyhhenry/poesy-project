@@ -7,6 +7,7 @@ import cn.d619.poesy.user.pojo.dto.RefreshRequest;
 import cn.d619.poesy.user.pojo.dto.RegisterRequest;
 import cn.d619.poesy.user.pojo.dto.TokenPair;
 import cn.d619.poesy.user.pojo.dto.UserExistsDTO;
+import cn.d619.poesy.user.pojo.dto.UserExistsRequest;
 import cn.d619.poesy.user.pojo.dto.VerifyRequest;
 import cn.d619.poesy.user.service.UserService;
 
@@ -20,14 +21,14 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/api/user/exists")
-    public UserExistsDTO userExists(String email) {
-        return new UserExistsDTO(userService.userExists(email));
+    public UserExistsDTO userExists(@RequestBody UserExistsRequest userExistsRequest) {
+        return new UserExistsDTO(userService.userExists(userExistsRequest.getEmail()));
     }
 
     @PostMapping("/api/user/register")
     public MsgDTO register(@RequestBody RegisterRequest registerRequest) {
         userService.addUser(registerRequest.getEmail(), registerRequest.getPassword());
-        return new MsgDTO("User registered successfully, check your email for verification code");
+        return new MsgDTO("注册成功，请检查邮箱并在120秒内验证");
     }
 
     @PostMapping("/api/user/verify")

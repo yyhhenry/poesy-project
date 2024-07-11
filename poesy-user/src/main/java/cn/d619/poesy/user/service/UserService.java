@@ -42,7 +42,7 @@ public class UserService {
     }
 
     public boolean userExists(String email) {
-        return getUserByEmail(email) != null || redisPendingUserService.getPendingUser(email) != null;
+        return getUserByEmail(email) != null;
     }
 
     private String generateCode() {
@@ -96,7 +96,7 @@ public class UserService {
         if (redisPendingUserService.savePendingUser(pendingUserDTO)) {
             emailService.sendVerificationEmail(email, code);
         } else {
-            throw new AuthException("用户已存在");
+            throw new AuthException("已有进行中的验证");
         }
     }
 
