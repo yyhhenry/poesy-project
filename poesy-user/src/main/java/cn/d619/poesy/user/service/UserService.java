@@ -106,10 +106,12 @@ public class UserService {
     }
 
     public TokenPair generateTokenPair(String email) {
-        String accessToken = jwtUtil.generateToken(email, "access");
-        String refreshToken = jwtUtil.generateToken(email, "refresh");
+        Long accessExpireTime = jwtUtil.generateExpireTime("access");
+        String accessToken = jwtUtil.generateToken(email, "access", accessExpireTime);
+        Long refreshExpireTime = jwtUtil.generateExpireTime("refresh");
+        String refreshToken = jwtUtil.generateToken(email, "refresh", refreshExpireTime);
         redisRefreshTokenService.addRefreshToken(email, refreshToken);
-        TokenPair pair = new TokenPair(accessToken, refreshToken);
+        TokenPair pair = new TokenPair(accessToken, accessExpireTime, refreshToken);
         return pair;
     }
 

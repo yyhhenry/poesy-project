@@ -24,7 +24,8 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/api/user/info")
-    public TokenInfoDTO getTokenInfo(@RequestHeader("Authorization") String token) {
+    public TokenInfoDTO getTokenInfo(@RequestHeader("Authorization") String Auth) {
+        String token = Auth.substring(7); // remove "Bearer "
         return userService.getTokenInfo(token);
     }
 

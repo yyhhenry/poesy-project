@@ -30,12 +30,15 @@ public class JwtUtil {
         key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String generateToken(String email, String type) {
-        long expirationTime = type.equals("refresh") ? REFRESH_EXPIRATION_TIME : ACCESS_EXPIRATION_TIME;
+    public Long generateExpireTime(String type) {
+        return System.currentTimeMillis() + (type.equals("refresh") ? REFRESH_EXPIRATION_TIME : ACCESS_EXPIRATION_TIME);
+    }
+
+    public String generateToken(String email, String type, Long ExpireTime) {
         return Jwts.builder()
                 .setSubject(email)
                 .claim("type", type)
-                .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
+                .setExpiration(new Date(ExpireTime))
                 .signWith(key)
                 .compact();
     }
