@@ -42,7 +42,7 @@ public class UserService {
     }
 
     public boolean userExists(String email) {
-        return getUserByEmail(email) != null;
+        return getUserByEmail(email) != null || redisPendingUserService.getPendingUser(email) != null;
     }
 
     private String generateCode() {
@@ -56,33 +56,30 @@ public class UserService {
 
     private void checkEmail(String email) {
         if (email == null || email.isEmpty()) {
-            throw new AuthException("Email is required");
+            throw new AuthException("Email 不能为空");
         }
 
-        // 定义邮箱格式的正则表达式
         String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
 
-        // 编译正则表达式
         Pattern pattern = Pattern.compile(emailRegex);
 
-        // 使用正则表达式匹配字符串
         Matcher matcher = pattern.matcher(email);
         if (!matcher.matches()) {
-            throw new AuthException("Email format is incorrect");
+            throw new AuthException("Email 格式不正确");
         }
     }
 
     private void checkPassword(String password) {
         if (password == null || password.isEmpty()) {
-            throw new AuthException("Password is required");
+            throw new AuthException("密码不能为空");
         }
 
         if (password.length() < 6) {
-            throw new AuthException("Password must be at least 6 characters long");
+            throw new AuthException("密码长度不能小于6");
         }
 
         if (password.length() > 20) {
-            throw new AuthException("Password must be at most 20 characters long");
+            throw new AuthException("密码长度不能大于20");
         }
     }
 
@@ -92,14 +89,14 @@ public class UserService {
         checkPassword(password);
         String encodedPassword = passwordEncoder.encode(password);
         if (userExists(email)) {
-            throw new AuthException("User already exists");
+            throw new AuthException("用户已存在");
         }
         String code = generateCode();
         PendingUserPO pendingUserDTO = new PendingUserPO(email, encodedPassword, code);
         if (redisPendingUserService.savePendingUser(pendingUserDTO)) {
             emailService.sendVerificationEmail(email, code);
         } else {
-            throw new AuthException("User is already pending");
+            throw new AuthException("用户已存在");
         }
     }
 
@@ -122,10 +119,10 @@ public class UserService {
     public void verifyUser(String email, String code) {
         PendingUserPO pendingUserDTO = redisPendingUserService.getPendingUser(email);
         if (pendingUserDTO == null) {
-            throw new AuthException("User is not pending");
+            throw new AuthException("不存在待验证用户");
         }
         if (!pendingUserDTO.getCode().equals(code)) {
-            throw new AuthException("Verification code is incorrect");
+            throw new AuthException("验证码错误");
         }
         UserPO userPO = new UserPO(pendingUserDTO.getEmail(), pendingUserDTO.getPassword());
         userMapper.insert(userPO);
@@ -136,10 +133,10 @@ public class UserService {
     public void login(String email, String password) {
         UserPO userPO = getUserByEmail(email);
         if (userPO == null) {
-            throw new AuthException("User does not exist");
+            throw new AuthException("用户不存在");
         }
         if (!passwordEncoder.matches(password, userPO.getPassword())) {
-            throw new AuthException("Password is incorrect");
+            throw new AuthException("密码错误");
         }
     }
 

@@ -6,22 +6,22 @@ import cn.d619.poesy.user.pojo.dto.MsgDTO;
 import cn.d619.poesy.user.pojo.dto.RefreshRequest;
 import cn.d619.poesy.user.pojo.dto.RegisterRequest;
 import cn.d619.poesy.user.pojo.dto.TokenPair;
+import cn.d619.poesy.user.pojo.dto.UserExistsDTO;
 import cn.d619.poesy.user.pojo.dto.VerifyRequest;
 import cn.d619.poesy.user.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
 public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/api/user/hello")
-    public String hello() {
-        return "Hello, user!";
+    @PostMapping("/api/user/exists")
+    public UserExistsDTO userExists(String email) {
+        return new UserExistsDTO(userService.userExists(email));
     }
 
     @PostMapping("/api/user/register")
