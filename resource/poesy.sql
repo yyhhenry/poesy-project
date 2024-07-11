@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS `question` (
     `title` VARCHAR(255) NOT NULL,
     `content` TEXT NOT NULL,
     `author-email` VARCHAR(255) NOT NULL,
+    `createdtime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`author-email`) REFERENCES `user`(`email`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
@@ -34,6 +35,7 @@ CREATE TABLE IF NOT EXISTS `article` (
     `title` VARCHAR(255) NOT NULL,
     `content` TEXT NOT NULL,
     `author-email` VARCHAR(255) NOT NULL,
+    `createdtime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`author-email`) REFERENCES `user`(`email`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
@@ -44,6 +46,7 @@ CREATE TABLE IF NOT EXISTS `answer` (
     `content` TEXT NOT NULL,
     `author-email` VARCHAR(255) NOT NULL,
     `question-id` VARCHAR(36) NOT NULL,
+    `createdtime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`author-email`) REFERENCES `user`(`email`) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (`question-id`) REFERENCES `question`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -55,6 +58,7 @@ CREATE TABLE IF NOT EXISTS `answercomment` (
     `content` TEXT NOT NULL,
     `author-email` VARCHAR(255) NOT NULL,
     `answer-id` VARCHAR(36) NOT NULL,
+    `createdtime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`author-email`) REFERENCES `user`(`email`) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (`answer-id`) REFERENCES `answer`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -66,6 +70,7 @@ CREATE TABLE IF NOT EXISTS `articlecomment` (
     `content` TEXT NOT NULL,
     `author-email` VARCHAR(255) NOT NULL,
     `article-id` VARCHAR(36) NOT NULL,
+    `createdtime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`author-email`) REFERENCES `user`(`email`) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (`article-id`) REFERENCES `article`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
