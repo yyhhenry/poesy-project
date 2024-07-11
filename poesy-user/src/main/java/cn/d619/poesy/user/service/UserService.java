@@ -122,6 +122,11 @@ public class UserService {
         return generateTokenPair(email);
     }
 
+    public void logout(String refreshToken) {
+        jwtUtil.validateTokenWithType(refreshToken, "refresh");
+        redisRefreshTokenService.consumeRefreshToken(refreshToken);
+    }
+
     @Transactional
     public void verifyUser(String email, String code) {
         UserVerificationPO userVerificationDTO = redisUserVerificationService.getUserVerification(email);

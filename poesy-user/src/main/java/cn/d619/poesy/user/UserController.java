@@ -59,4 +59,10 @@ public class UserController {
         return userService.refreshToken(refreshRequest.getRefreshToken());
     }
 
+    @PostMapping("/api/user/logout")
+    public MsgDTO logout(@RequestBody RefreshRequest refreshRequest) {
+        userService.logout(refreshRequest.getRefreshToken());
+        return new MsgDTO("登出成功");
+    }
+
 }
