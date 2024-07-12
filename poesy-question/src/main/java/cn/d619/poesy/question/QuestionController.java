@@ -10,11 +10,12 @@ import cn.d619.poesy.question.service.QuestionService;
 import cn.d619.poesy.question.util.JwtUtil;
 import cn.d619.poesy.question.pojo.dto.AddQuestionDTO;
 import cn.d619.poesy.question.pojo.dto.MsgDTO;
+import cn.d619.poesy.question.pojo.dto.PaginationRequest;
 import cn.d619.poesy.question.pojo.dto.QuestionBriefDTO;
 import cn.d619.poesy.question.pojo.po.QuestionPO;
 import cn.d619.poesy.question.exception.HttpException;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 public class QuestionController {
@@ -40,13 +41,18 @@ public class QuestionController {
         return new MsgDTO("问题上传成功");
     }
 
+    @GetMapping("/api/question/by/{id}")
+    public QuestionBriefDTO[] questionsBy(@RequestBody PaginationRequest paginationRequest) {
+        return questionService.questionsBy(paginationRequest);
+    }
+
     @GetMapping("/api/question/{id}")
-    public QuestionPO getQuestion(@RequestParam("id") String id) {
+    public QuestionPO getQuestion(@PathVariable("id") String id) {
         return questionService.getQuestion(id);
     }
 
     @GetMapping("/api/question/latest")
-    public QuestionBriefDTO[] latestQuestions() {
-        return questionService.latestQuestions();
+    public QuestionBriefDTO[] latestQuestions(@RequestBody PaginationRequest paginationRequest) {
+        return questionService.latestQuestions(paginationRequest);
     }
 }
