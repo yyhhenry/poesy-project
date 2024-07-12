@@ -31,3 +31,7 @@ spring:
           uri: lb://poesy-image
           predicates:
             - Path=/api/image/**
+        - id: poesy-qwen
+          uri: lb://poesy-qwen
+          predicates:
+            - Path=/api/qwen/**
