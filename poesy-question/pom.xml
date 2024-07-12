@@ -10,7 +10,7 @@
     </parent>
 
     <groupId>cn.d619</groupId>
-    <artifactId>poesy-user</artifactId>
+    <artifactId>poesy-question</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
