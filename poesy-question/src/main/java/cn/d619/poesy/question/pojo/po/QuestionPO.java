@@ -1,5 +1,9 @@
 package cn.d619.poesy.question.pojo.po;
 
+import java.sql.Date;
+
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -12,15 +16,17 @@ public class QuestionPO {
     private String id;
     private String title;
     private String content;
-    private String author_email;
-    private Date created_time;
+    private String authorEmail;
+    @TableField(fill = FieldFill.INSERT)
+    private Date createdTime;
 
-    public QuestionPO(String id, String title, String content, String author_email, Date created_time) {
+    public QuestionPO() {
+    }
+
+    public QuestionPO(String id, String title, String content, String authorEmail) {
         this.id = id;
         this.title = title;
         this.content = content;
-        this.author_email = author_email;
-        this.created_time = created_time;
-
+        this.authorEmail = authorEmail;
     }
 }
