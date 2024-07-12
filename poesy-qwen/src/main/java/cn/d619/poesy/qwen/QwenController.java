@@ -24,7 +24,7 @@ public class QwenController {
     @Autowired
     private QwenService qwenService;
 
-    @PostMapping("/api/qwen/chat")
+    @PostMapping("/api/qwen/answer")
     public QwenResponse chat(@RequestBody QwenRequest request,
             @RequestHeader("Authorization") String auth) {
         if (auth == null || !auth.startsWith("Bearer ")) {
