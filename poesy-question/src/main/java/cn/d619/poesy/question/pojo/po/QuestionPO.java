@@ -1,6 +1,6 @@
 package cn.d619.poesy.question.pojo.po;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -18,7 +18,7 @@ public class QuestionPO {
     private String content;
     private String authorEmail;
     @TableField(fill = FieldFill.INSERT)
-    private Date createdTime;
+    private LocalDateTime createdTime;
 
     public QuestionPO() {
     }
