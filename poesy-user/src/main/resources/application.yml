@@ -28,5 +28,5 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: localhost:8848
+        server-addr: ${NACOS_SERVER_PORT}
         ip: ${EXTERNAL_IP:127.0.0.1}
