@@ -23,3 +23,7 @@ spring:
           uri: lb://poesy-user
           predicates:
             - Path=/api/user/**
+        - id: poesy-question
+          uri: lb://poesy-question
+          predicates:
+            - Path=/api/question/**

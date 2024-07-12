@@ -12,15 +12,15 @@ public class QuestionPO {
     private String id;
     private String title;
     private String content;
-    private String authorEmail;
-    private Data createdTime;
+    private String author_email;
+    private Data created_time;
 
-    public QuestionPO(String id, String title, String content, String authorEmail, Data createdTime) {
+    public QuestionPO(String id, String title, String content, String author_email, Data create_time) {
         this.id = id;
         this.title = title;
         this.content = content;
-        this.authorEmail = authorEmail;
-        this.createdTime = createdTime;
+        this.author_email = author_email;
+        this.created_time = created_time;
 
     }
 }
