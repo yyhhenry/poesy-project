@@ -16,5 +16,8 @@
             "database": "poesy",
             "username": "root"
         }
-    ]
+    ],
+    "java.test.config": {
+        "envFile": "${workspaceFolder}/.env"
+    }
 }

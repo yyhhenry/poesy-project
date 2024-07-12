@@ -19,6 +19,7 @@ public class JwtTest {
         Long expireTime = jwtUtil.generateExpireTime(type);
         String token = jwtUtil.generateToken("admin@example.com", type, expireTime);
         System.out.println(token);
+        jwtUtil.validateTokenWithType(token, type);
     }
 
     @Test
