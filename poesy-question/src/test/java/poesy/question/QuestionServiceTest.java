@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import cn.d619.poesy.question.QuestionApplication;
-import cn.d619.poesy.question.pojo.po.QuestionPO;
+
 import cn.d619.poesy.question.service.QuestionService;
 
 @SpringBootTest(classes = { QuestionApplication.class })
@@ -17,7 +17,7 @@ public class QuestionServiceTest {
     @Test
     void testAddQuestion() {
         String email = "test@example.com";
-        QuestionPO questionPO = new QuestionPO("0000", "title", "content", email);
-        questionService.addQuestion(questionPO);
+
+        questionService.addQuestion("title", "content", email);
     }
 }

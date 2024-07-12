@@ -12,7 +12,10 @@ public class QuestionService {
     @Autowired
     private QuestionMapper questionMapper;
 
-    public void addQuestion(AddQuestionDTO addQuestionDTO) {
+    // private QuestionPO getQuestionByTitle(String title) {
+    // return QuestionMapper.
+    // }
+    public void addQuestion(String title, String content, String authorEmail) {
 
         // questionMapper.insert(questionPO);
     }
