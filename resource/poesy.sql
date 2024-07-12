@@ -9,6 +9,8 @@ CREATE TABLE IF NOT EXISTS `user` (
     -- Avatar will be got from gravatar
     PRIMARY KEY (`email`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+INSERT INTO `user` (`email`, `password`)
+VALUES ('test@example.com', 'test');
 -- In redis we have `user-verification` for users who have not activated their account
 -- "user-verification:<email>" -> {password: <password>, code: <code>}
 -- Create the image table
