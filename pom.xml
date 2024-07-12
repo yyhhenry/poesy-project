@@ -16,6 +16,7 @@
 	<modules>
 		<module>poesy-gateway</module>
 		<module>poesy-user</module>
+		<module>poesy-question</module>
 	</modules>
 	<name>poesy-project</name>
 	<description>Demo project for Spring Boot</description>

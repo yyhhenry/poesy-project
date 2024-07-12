@@ -1,25 +1,10 @@
 server:
   address: localhost
-  port: 8081
+  port: 8082
 
 spring:
-  data:
-    redis:
-      host: localhost
-      port: 6379
-  mail:
-    host: smtp.qq.com
-    port: 587
-    username: ${MAIL_USERNAME}
-    password: ${MAIL_PASSWORD}
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
   application:
-    name: poesy-user
+    name: poesy-question
   datasource:
     url: jdbc:mysql://localhost:3306/poesy?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
     username: ${MYSQL_USERNAME}
