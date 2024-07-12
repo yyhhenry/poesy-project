@@ -18,6 +18,7 @@
 		<module>poesy-user</module>
 		<module>poesy-question</module>
 		<module>poesy-image</module>
+		<module>poesy-qwen</module>
 	</modules>
 	<name>poesy-project</name>
 	<description>Demo project for Spring Boot</description>
