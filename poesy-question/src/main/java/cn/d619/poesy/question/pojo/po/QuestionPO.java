@@ -13,9 +13,9 @@ public class QuestionPO {
     private String title;
     private String content;
     private String author_email;
-    private Data created_time;
+    private Date created_time;
 
-    public QuestionPO(String id, String title, String content, String author_email, Data create_time) {
+    public QuestionPO(String id, String title, String content, String author_email, Date created_time) {
         this.id = id;
         this.title = title;
         this.content = content;
