@@ -16,7 +16,7 @@ public class QuestionService {
     // return QuestionMapper.
     // }
     public void addQuestion(String title, String content, String authorEmail) {
-
-        // questionMapper.insert(questionPO);
+        QuestionPO questionPO = new QuestionPO(title, content, authorEmail);
+        questionMapper.insert(questionPO);
     }
 }
