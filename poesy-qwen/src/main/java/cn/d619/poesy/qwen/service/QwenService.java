@@ -1,8 +1,5 @@
 package cn.d619.poesy.qwen.service;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -20,12 +17,6 @@ public class QwenService {
     private RestTemplate restTemplate;
 
     public OllamaResponse accessOllama(OllamaRequest request) {
-        // Access Ollama like:
-        // curl http://localhost:11434/api/generate -d '{
-        // "model": "qwen2",
-        // "prompt": "Why is the sky blue?",
-        // "stream": false
-        // }'
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<OllamaRequest> entity = new HttpEntity<>(request, headers);
