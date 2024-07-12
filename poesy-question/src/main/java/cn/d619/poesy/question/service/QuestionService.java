@@ -5,13 +5,15 @@ import org.springframework.stereotype.Service;
 
 import cn.d619.poesy.question.mapper.QuestionMapper;
 import cn.d619.poesy.question.pojo.po.QuestionPO;
+import cn.d619.poesy.question.pojo.dto.AddQuestionDTO;
 
 @Service
 public class QuestionService {
     @Autowired
     private QuestionMapper questionMapper;
 
-    public void addQuestion(QuestionPO questionPO) {
-        questionMapper.insert(questionPO);
+    public void addQuestion(AddQuestionDTO addQuestionDTO) {
+
+        // questionMapper.insert(questionPO);
     }
 }
