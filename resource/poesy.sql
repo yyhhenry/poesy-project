@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS `image` (
     -- use uuid for id
     `id` VARCHAR(36) NOT NULL,
     `content` LONGBLOB NOT NULL,
+    `ext` VARCHAR(10) NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 -- Create the question table
