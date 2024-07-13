@@ -1,7 +1,5 @@
 package cn.d619.poesy.articlecomment.pojo.dto;
 
-import java.time.LocalDateTime;
-
 import lombok.Data;
 
 @Data
