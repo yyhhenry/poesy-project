@@ -16,7 +16,6 @@ import cn.d619.poesy.article.exception.HttpException;
 import cn.d619.poesy.article.pojo.po.ArticlePO;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 public class ArticleController {
@@ -42,9 +41,19 @@ public class ArticleController {
         return new MsgDTO("文章上传成功");
     }
 
+    @GetMapping("/api/article/by/{id}")
+    public ArticleBriefDTO[] articlesBy(@RequestBody PaginationRequest paginationRequest) {
+        return articleService.articlesBy(paginationRequest);
+    }
+
     @GetMapping("/api/article/{id}")
     public ArticlePO getArticle(@PathVariable("id") String id) {
         return articleService.getArticle(id);
+    }
+
+    @GetMapping("/api/article/latest")
+    public ArticleBriefDTO[] latestArticles(@RequestBody PaginationRequest paginationRequest) {
+        return articleService.latestArticles(paginationRequest);
     }
 
 }
