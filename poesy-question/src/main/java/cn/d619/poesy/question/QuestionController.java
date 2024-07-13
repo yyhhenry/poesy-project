@@ -70,7 +70,7 @@ public class QuestionController {
     public ListQuestionBriefDTO latestQuestions(@RequestParam("offset") String offset) {
         // return questionService.latestQuestions(paginationRequest);
         ListQuestionBriefDTO listQuestionBriefDTO = new ListQuestionBriefDTO(
-                questionService.latestQuestions(paginationRequest));
+                questionService.latestQuestions(new PaginationRequest(Integer.parseInt(offset), 5)));
         // questionService.latestQuestions(paginationRequest);
         return listQuestionBriefDTO;
     }
