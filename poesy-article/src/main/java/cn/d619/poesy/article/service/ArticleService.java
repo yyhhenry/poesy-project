@@ -11,13 +11,13 @@ public class ArticleService {
     @Autowired
     private ArticleMapper articleMapper;
 
-    public void addArticle(ArticlePO articlePO) {
+    public String addArticle(String title, String content, String authorEmail) {
         ArticlePO articlePO = new ArticlePO(title, content, authorEmail);
         articleMapper.insert(articlePO);
         return articlePO.getId();
-    }  
+    }
 
-    public void searchArticle(ArticlePO articlePO) {
-        articleMapper.findArticleById(articlePO);
+    public ArticlePO getArticle(String id) {
+        return articleMapper.selectById(id);
     }
 }

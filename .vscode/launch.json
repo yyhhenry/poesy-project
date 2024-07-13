@@ -39,6 +39,14 @@
             "mainClass": "cn.d619.poesy.gateway.GatewayApplication",
             "projectName": "poesy-gateway",
             "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "ArticleApplication",
+            "request": "launch",
+            "mainClass": "cn.d619.poesy.article.ArticleApplication",
+            "projectName": "poesy-article",
+            "envFile": "${workspaceFolder}/.env"
         }
     ]
 }

@@ -17,14 +17,14 @@ public class ArticleServiceTest {
     @Test
     void testAddArticle() {
         String email = "test@example.com";
-        ArticlePO articlePO = new ArticlePO("0000", "title", "content", email);
-        articleService.addArticle(articlePO);
+        ArticlePO articlePO = new ArticlePO("title", "content", email);
+        articleService.addArticle(email, email, email);
     }
 
     @Test
     void testSearchArticle() {
         ArticlePO articlePO = new ArticlePO();
         articlePO.setTitle("title");
-        articleService.searchArticle(articlePO);
+        articleService.getArticle("id");
     }
 }
