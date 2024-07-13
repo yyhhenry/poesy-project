@@ -12,7 +12,9 @@ public class ArticleService {
     private ArticleMapper articleMapper;
 
     public void addArticle(ArticlePO articlePO) {
+        ArticlePO articlePO = new ArticlePO(title, content, authorEmail);
         articleMapper.insert(articlePO);
+        return articlePO.getId();
     }  
 
     public void searchArticle(ArticlePO articlePO) {
