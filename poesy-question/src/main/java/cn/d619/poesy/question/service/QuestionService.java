@@ -22,7 +22,7 @@ public class QuestionService {
     // private QuestionService questionService;
 
     private void ensureValidPaginationRequest(PaginationRequest paginationRequest) {
-        if (paginationRequest.getSize() <= 0 || paginationRequest.getPage() < 0) {
+        if (paginationRequest.getSize() <= 0 || paginationRequest.getOffset() < 0) {
             throw new HttpException(HttpStatus.BAD_REQUEST, "Invalid pagination request");
         }
         if (paginationRequest.getSize() > 15) {
@@ -40,11 +40,21 @@ public class QuestionService {
         return questionMapper.selectById(id);
     }
 
-    public List<QuestionBriefDTO> questionsBy(PaginationRequest paginationRequest, String authorEmail) {
-        ensureValidPaginationRequest(paginationRequest);
+    public List<QuestionBriefDTO> questionsBy(String authorEmail) {
+        // ensureValidPaginationRequest(paginationRequest);
         QueryWrapper<QuestionPO> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("author_email", authorEmail);
+        queryWrapper.select("id", "title", "author_email", "created_time");
         List<QuestionPO> questionPOList = questionMapper.selectList(queryWrapper);
+        return questionPOList.stream()
+                .map(questionPO -> new QuestionBriefDTO(questionPO.getId(), questionPO.getTitle(),
+                        questionPO.getCreatedTime().toString(), questionPO.getAuthorEmail()))
+                .toList();
+        // return questionPOList.stream()
+        // .map(questionPO -> new QuestionBriefDTO(questionPO.getId(),
+        // questionPO.getTitle()))
+        // .toList();
+        // throw new UnsupportedOperationException();
         // List<QuestionBriefDTO> questionsby = questionPOList.stream()
         // .map(questionPO -> new QuestionBriefDTO(questionPO.getId(),
         // questionPO.getTitle()))
@@ -53,13 +63,6 @@ public class QuestionService {
         // .toList();
         // .skip(paginationRequest.getPage() * paginationRequest.getSize())
         // .limit(paginationRequest.getSize())
-        return questionPOList.stream()
-                .map(questionPO -> new QuestionBriefDTO(questionPO.getId(), questionPO.getTitle()))
-                .skip((paginationRequest.getPage() - 1) * paginationRequest.getSize())
-                .limit(paginationRequest.getSize())
-                .toList();
-        // throw new UnsupportedOperationException();
-
     }
 
     public List<QuestionBriefDTO> latestQuestions(PaginationRequest paginationRequest) {
@@ -67,16 +70,14 @@ public class QuestionService {
         // 创建查询条件
         QueryWrapper<QuestionPO> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByDesc("created_time");
-        // 创建分页对象
-        Page<QuestionMapper> page = new Page<>(paginationRequest.getPage(), paginationRequest.getSize());
-
-        // 查询
-        Page<QuestionMapper> questionPage = questionService.page(page, queryWrapper);
+        queryWrapper.select("id", "title", "author_email", "created_time");
+        // 添加 LIMIT 子句
+        queryWrapper.last("LIMIT " + paginationRequest.getOffset() + "," + paginationRequest.getSize());
 
         List<QuestionPO> questionPOList = questionMapper.selectList(queryWrapper);
         return questionPOList.stream()
-                .map(questionPO -> new QuestionBriefDTO(questionPO.getId(), questionPO.getTitle()))
-                .skip(paginationRequest.getPage() * paginationRequest.getSize()).limit(paginationRequest.getSize())
+                .map(questionPO -> new QuestionBriefDTO(questionPO.getId(), questionPO.getTitle(),
+                        questionPO.getCreatedTime().toString(), questionPO.getAuthorEmail()))
                 .toList();
         // throw new UnsupportedOperationException();
     }
