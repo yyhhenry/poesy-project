@@ -26,3 +26,4 @@ jobs:
           mvn -B package --file poesy-image/pom.xml -DskipTests
           mvn -B package --file poesy-qwen/pom.xml -DskipTests
           mvn -B package --file poesy-article/pom.xml -DskipTests
+          mvn -B package --file poesy-answer/pom.xml -DskipTests
