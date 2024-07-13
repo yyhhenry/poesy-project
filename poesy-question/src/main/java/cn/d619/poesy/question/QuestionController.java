@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import cn.d619.poesy.question.service.QuestionService;
 import cn.d619.poesy.question.util.JwtUtil;
 import cn.d619.poesy.question.pojo.dto.AddQuestionDTO;
+import cn.d619.poesy.question.pojo.dto.ListQuestionBriefDTO;
 import cn.d619.poesy.question.pojo.dto.MsgDTO;
 import cn.d619.poesy.question.pojo.dto.PaginationRequest;
 import cn.d619.poesy.question.pojo.dto.QuestionBriefDTO;
@@ -18,6 +19,7 @@ import cn.d619.poesy.question.exception.HttpException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
+import cn.d619.poesy.question.pojo.dto.uploadDTO;
 
 @RestController
 public class QuestionController {
@@ -28,7 +30,8 @@ public class QuestionController {
     private JwtUtil jwtUtil;
 
     @PostMapping("/api/question/upload")
-    public String addQuestion(@RequestBody AddQuestionDTO addQuestionDTO, @RequestHeader("Authorization") String auth) {
+    public uploadDTO addQuestion(@RequestBody AddQuestionDTO addQuestionDTO,
+            @RequestHeader("Authorization") String auth) {
         if (auth == null || !auth.startsWith("Bearer ")) {
             throw new HttpException(HttpStatus.UNAUTHORIZED, "Missing or invalid token");
         }
@@ -39,8 +42,9 @@ public class QuestionController {
 
         String title = addQuestionDTO.getTitle();
         String content = addQuestionDTO.getContent();
-
-        return questionService.addQuestion(title, content, authorEmail);
+        String uploadmsg = questionService.addQuestion(title, content, authorEmail);
+        uploadDTO upload = new uploadDTO(uploadmsg);
+        return upload;
     }
 
     @GetMapping("/api/question/by-user")
@@ -63,7 +67,8 @@ public class QuestionController {
     }
 
     @GetMapping("/api/question/latest")
-    public List<QuestionBriefDTO> latestQuestions(@RequestBody PaginationRequest paginationRequest) {
-        return questionService.latestQuestions(paginationRequest);
+    public ListQuestionBriefDTO latestQuestions(@RequestBody PaginationRequest paginationRequest) {
+        // return questionService.latestQuestions(paginationRequest);
+
     }
 }
