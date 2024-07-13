@@ -49,4 +49,9 @@ public class ArticleCommentController {
     public ArticleCommentPO getArticleComment(@PathVariable("id") String id) {
         return articlecommentService.getArticleComment(id);
     }
+
+
+    @GetMapping("/api/article-comment/by-article/{id}")
+   public ArticleCommentPO getArticleComment(@PathVariable("id") String id) {
+        return articlecommentService. getCommentByarticleId(id);
 }
