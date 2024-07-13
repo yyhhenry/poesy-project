@@ -1,8 +1,12 @@
 package cn.d619.poesy.article.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 
 import cn.d619.poesy.article.exception.HttpException;
 import cn.d619.poesy.article.mapper.ArticleMapper;
@@ -16,10 +20,10 @@ public class ArticleService {
     private ArticleMapper articleMapper;
 
     private void ensureValidPaginationRequest(PaginationRequest paginationRequest) {
-        if (paginationRequest.getLimit() <= 0 || paginationRequest.getStart() < 0) {
+        if (paginationRequest.getSize() <= 0 || paginationRequest.getOffset() < 0) {
             throw new HttpException(HttpStatus.BAD_REQUEST, "Invalid pagination request");
         }
-        if (paginationRequest.getLimit() > 15) {
+        if (paginationRequest.getSize() > 15) {
             throw new IllegalArgumentException("Limit too large");
         }
     }
@@ -34,15 +38,30 @@ public class ArticleService {
         return articleMapper.selectById(id);
     }
 
-    public ArticleBriefDTO[] articlesBy(PaginationRequest paginationRequest) {
-        ensureValidPaginationRequest(paginationRequest);
-        /// TODO: implement this method
-        throw new UnsupportedOperationException();
+    public List<ArticleBriefDTO> articlesBy(String authorEmail) {
+        QueryWrapper<ArticlePO> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("author_email", authorEmail);
+        queryWrapper.select("id", "title", "author_email", "created_time");
+        List<ArticlePO> articlePOList = articleMapper.selectList(queryWrapper);
+        return articlePOList.stream()
+                .map(articlePO -> new ArticleBriefDTO(articlePO.getId(), articlePO.getTitle(),
+                        articlePO.getCreatedTime().toString(), articlePO.getAuthorEmail()))
+                .toList();
     }
 
-    public ArticleBriefDTO[] latestArticles(PaginationRequest paginationRequest) {
+    public List<ArticleBriefDTO> latestArticles(PaginationRequest paginationRequest) {
         ensureValidPaginationRequest(paginationRequest);
-        /// TODO: implement this method
-        throw new UnsupportedOperationException();
+        // 创建查询条件
+        QueryWrapper<ArticlePO> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("created_time");
+        queryWrapper.select("id", "title", "author_email", "created_time");
+        // 添加 LIMIT 子句
+        queryWrapper.last("LIMIT " + paginationRequest.getOffset() + "," + paginationRequest.getSize());
+
+        List<ArticlePO> articlePOList = articleMapper.selectList(queryWrapper);
+        return articlePOList.stream()
+                .map(articlePO -> new ArticleBriefDTO(articlePO.getId(), articlePO.getTitle(),
+                        articlePO.getCreatedTime().toString(), articlePO.getAuthorEmail()))
+                .toList();
     }
 }

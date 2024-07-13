@@ -4,6 +4,11 @@ import lombok.Data;
 
 @Data
 public class PaginationRequest {
-    private int limit;
-    private int start;
+    private int offset;
+    private int size;
+
+    public PaginationRequest(int offset, int size) {
+        this.offset = offset;
+        this.size = size;
+    }
 }
