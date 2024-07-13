@@ -1,17 +1,22 @@
 package cn.d619.poesy.article;
 
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.http.HttpStatus;
 import cn.d619.poesy.article.service.ArticleService;
 import cn.d619.poesy.article.util.JwtUtil;
 import cn.d619.poesy.article.pojo.dto.AddArticleDTO;
-import cn.d619.poesy.article.pojo.dto.MsgDTO;
 import cn.d619.poesy.article.pojo.dto.PaginationRequest;
 import cn.d619.poesy.article.pojo.dto.ArticleBriefDTO;
+import cn.d619.poesy.article.pojo.dto.UploadDTO;
+import cn.d619.poesy.article.pojo.dto.ListArticleBriefDTO;
 import cn.d619.poesy.article.exception.HttpException;
 import cn.d619.poesy.article.pojo.po.ArticlePO;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +31,7 @@ public class ArticleController {
     private JwtUtil jwtUtil;
 
     @PostMapping("/api/article/upload")
-    public MsgDTO addArticle(@RequestBody AddArticleDTO addArticleDTO, @RequestHeader("Authorization") String auth) {
+    public UploadDTO addArticle(@RequestBody AddArticleDTO addArticleDTO, @RequestHeader("Authorization") String auth) {
         if (auth == null || !auth.startsWith("Bearer ")) {
             throw new HttpException(HttpStatus.UNAUTHORIZED, "Missing or invalid token");
         }
@@ -37,13 +42,23 @@ public class ArticleController {
 
         String title = addArticleDTO.getTitle();
         String content = addArticleDTO.getContent();
-        articleService.addArticle(title, content, authorEmail);
-        return new MsgDTO("文章上传成功");
+        String uploadMessage = articleService.addArticle(title, content, authorEmail);
+        UploadDTO upload = new UploadDTO(uploadMessage);
+        return upload;
     }
 
-    @GetMapping("/api/article/by/{id}")
-    public ArticleBriefDTO[] articlesBy(@RequestBody PaginationRequest paginationRequest) {
-        return articleService.articlesBy(paginationRequest);
+    @GetMapping("/api/article/by-user")
+    public List<ArticleBriefDTO> articlesBy(@RequestParam("email") String email,
+            @RequestHeader("Authorization") String auth) {
+        if (auth == null || !auth.startsWith("Bearer ")) {
+            throw new HttpException(HttpStatus.UNAUTHORIZED, "Missing or invalid token");
+        }
+        String token = auth.substring(7); // remove "Bearer "
+        jwtUtil.validateTokenWithType(token, "access");
+
+        return articleService.articlesBy(email);
+
+        // throw new UnsupportedOperationException();
     }
 
     @GetMapping("/api/article/{id}")
@@ -52,8 +67,12 @@ public class ArticleController {
     }
 
     @GetMapping("/api/article/latest")
-    public ArticleBriefDTO[] latestArticles(@RequestBody PaginationRequest paginationRequest) {
-        return articleService.latestArticles(paginationRequest);
+    public ListArticleBriefDTO latestArticles(@RequestParam("offset") String offset) {
+        // return articleService.latestArticles(paginationRequest);
+        ListArticleBriefDTO listArticleBriefDTO = new ListArticleBriefDTO(
+                articleService.latestArticles(new PaginationRequest(Integer.parseInt(offset), 6)));
+        // articleService.latestArticles(paginationRequest);
+        return listArticleBriefDTO;
     }
 
 }
