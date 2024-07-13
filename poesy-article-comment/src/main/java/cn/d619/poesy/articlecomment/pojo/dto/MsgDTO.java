@@ -1,4 +1,4 @@
-package cn.d619.poesy.question.pojo.dto;
+package cn.d619.poesy.articlecomment.pojo.dto;
 
 import lombok.Data;
 

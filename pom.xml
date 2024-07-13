@@ -20,6 +20,7 @@
 		<module>poesy-image</module>
 		<module>poesy-qwen</module>
 		<module>poesy-article</module>
+		<module>poesy-article-comment</module>
 	</modules>
 	<name>poesy-project</name>
 	<description>Demo project for Spring Boot</description>

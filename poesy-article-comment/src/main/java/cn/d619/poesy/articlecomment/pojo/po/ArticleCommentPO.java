@@ -1,4 +1,4 @@
-package cn.d619.poesy.question.pojo.po;
+package cn.d619.poesy.articlecomment.pojo.po;
 
 import java.time.LocalDateTime;
 
@@ -23,11 +23,12 @@ public class ArticleCommentPO {
     public ArticleCommentPO() {
     }
 
-    public ArticleCommentPO(String id,  String content, String authorEmail,String articleId ,String createdTime) {
+    public ArticleCommentPO(String id, String content, String authorEmail, String articleId,
+            LocalDateTime createdTime) {
         this.id = id;
         this.content = content;
-         this.authorEmail = authorEmail;
-         this.articleId = articleId;
-          this.createdTime = createdTime;
+        this.authorEmail = authorEmail;
+        this.articleId = articleId;
+        this.createdTime = createdTime;
     }
 }

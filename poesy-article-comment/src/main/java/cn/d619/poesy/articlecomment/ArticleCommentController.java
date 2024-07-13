@@ -11,7 +11,7 @@ import cn.d619.poesy.articlecomment.util.JwtUtil;
 import cn.d619.poesy.articlecomment.pojo.dto.AddArticleCommentDTO;
 import cn.d619.poesy.articlecomment.pojo.dto.MsgDTO;
 import cn.d619.poesy.articlecomment.pojo.dto.PaginationRequest;
-import cn.d619.poesy.articlecomment.pojo.dto.ArticleCommentBriefDTO;
+
 import cn.d619.poesy.articlecomment.pojo.po.ArticleCommentPO;
 import cn.d619.poesy.articlecomment.exception.HttpException;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,8 +27,9 @@ public class ArticleCommentController {
     @Autowired
     private JwtUtil jwtUtil;
 
-    @PostMapping("/api/articlecomment/upload")
-    public MsgDTO addArticleComment(@RequestBody AddArticleCommentDTO addArticleCommentDTO, @RequestHeader("Authorization") String auth) {
+    @PostMapping("/api/article-comment/upload")
+    public MsgDTO addQuestion(@RequestBody AddArticleCommentDTO addArticleCommentDTO,
+            @RequestHeader("Authorization") String auth) {
         if (auth == null || !auth.startsWith("Bearer ")) {
             throw new HttpException(HttpStatus.UNAUTHORIZED, "Missing or invalid token");
         }
@@ -37,24 +38,14 @@ public class ArticleCommentController {
 
         String authorEmail = jwtUtil.getEmailFromToken(token);
 
-        String title = addArticleCommentDTO.getTitle();
-        String content = addArticleCommentDTO.getContent();
-        articlecommentService.addArticleComment(title, content, authorEmail);
-        return new MsgDTO("问题上传成功");
+        String title = addQuestionDTO.getTitle();
+        String content = addQuestionDTO.getContent();
+        questionService.addQuestion(title, content, authorEmail);
+        return new MsgDTO("评论上传成功");
     }
 
-    @GetMapping("/api/articlecomment/by/{id}")
-    public ArticleCommentBriefDTO[] articlecommentsBy(@RequestBody PaginationRequest paginationRequest) {
-        return articlecommentService.articlecommentsBy(paginationRequest);
-    }
-
-    @GetMapping("/api/articlecomment/{id}")
+    @GetMapping("/api/article-comment/{id}")
     public ArticleCommentPO getArticleComment(@PathVariable("id") String id) {
         return articlecommentService.getArticleComment(id);
-    }
-
-    @GetMapping("/api/articlecomment/latest")
-    public ArticleCommentBriefDTO[] latestArticleComments(@RequestBody PaginationRequest paginationRequest) {
-        return articlecommentService.latestArticleComments(paginationRequest);
     }
 }

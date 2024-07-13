@@ -45,23 +45,22 @@ public class QuestionController {
 
         String title = addQuestionDTO.getTitle();
         String content = addQuestionDTO.getContent();
-        return new UploadDTO(questionService.addQuestion(title, content, authorEmail));
+        questionService.addQuestion(title, content, authorEmail);
+        return new MsgDTO("评论上传成功");
     }
 
-    @GetMapping("/api/question/by-user")
-    public ListQuestionBriefDTO questionsBy(@RequestParam("email") String email) {
-        return new ListQuestionBriefDTO(questionService.questionsBy(email));
+    @GetMapping("/api/article-comment/by/{id}")
+    public QuestionBriefDTO[] questionsBy(@RequestBody PaginationRequest paginationRequest) {
+        return questionService.questionsBy(paginationRequest);
     }
 
-    @GetMapping("/api/question/{id}")
+    @GetMapping("/api/article-comment/{id}")
     public QuestionPO getQuestion(@PathVariable("id") String id) {
         return questionService.getQuestion(id);
     }
 
-    @GetMapping("/api/question/latest")
-    public ListQuestionBriefDTO latestQuestions(@RequestParam("offset") Long offset) {
-        PaginationRequest paginationRequest = new PaginationRequest(offset);
-        List<QuestionBriefDTO> briefs = questionService.latestQuestions(paginationRequest);
-        return new ListQuestionBriefDTO(briefs);
+    @GetMapping("/api/article-comment/latest")
+    public QuestionBriefDTO[] latestQuestions(@RequestBody PaginationRequest paginationRequest) {
+        return questionService.latestQuestions(paginationRequest);
     }
 }
