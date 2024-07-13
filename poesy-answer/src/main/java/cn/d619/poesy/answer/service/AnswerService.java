@@ -6,22 +6,20 @@ import org.springframework.stereotype.Service;
 import cn.d619.poesy.answer.mapper.AnswerMapper;
 import cn.d619.poesy.answer.pojo.po.AnswerPO;
 
-
 @Service
 public class AnswerService {
-
-    private final AnswerRepository answerRepository;
-
     @Autowired
-    public AnswerService(AnswerRepository answerRepository) {
-        this.answerRepository = answerRepository;
-    }
+    private AnswerMapper answerMapper;
 
-    public Answer addAnswer(Answer answer) {
-        return answerRepository.save(answer);
+    public AnswerService() {
+        // 如果有其他需要注入的依赖，可以在这里进行初始化
     }
 
     public AnswerPO getAnswer(String id) {
-        return AnswerMapper.selectById(id);
+        return answerMapper.selectById(id);
+    }
+
+    public AnswerPO addAnswer(AnswerPO answerPO) {
+        return answerMapper.insertAnswerPO(answerPO);
     }
 }

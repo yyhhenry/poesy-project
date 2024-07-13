@@ -7,4 +7,8 @@ import cn.d619.poesy.answer.pojo.po.AnswerPO;
 
 @Mapper
 public interface AnswerMapper extends BaseMapper<AnswerPO> {
+    AnswerPO selectById(String id);
+
+    AnswerPO insertAnswerPO(AnswerPO answerPO);
+
 }
