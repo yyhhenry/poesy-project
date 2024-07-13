@@ -44,17 +44,15 @@ public class QuestionController {
     }
 
     @GetMapping("/api/question/by-user")
-    public List<QuestionBriefDTO> questionsBy(@RequestParam("email") String email, @RequestParam("page") int page,
-            @RequestParam("size") int size,
+    public List<QuestionBriefDTO> questionsBy(@RequestParam("email") String email,
             @RequestHeader("Authorization") String auth) {
         if (auth == null || !auth.startsWith("Bearer ")) {
             throw new HttpException(HttpStatus.UNAUTHORIZED, "Missing or invalid token");
         }
         String token = auth.substring(7); // remove "Bearer "
         jwtUtil.validateTokenWithType(token, "access");
-        PaginationRequest paginationrequest = new PaginationRequest(page, size);
 
-        return questionService.questionsBy(paginationrequest, email);
+        return questionService.questionsBy(email);
 
         // throw new UnsupportedOperationException();
     }
