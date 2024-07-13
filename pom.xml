@@ -19,6 +19,7 @@
 		<module>poesy-question</module>
 		<module>poesy-image</module>
 		<module>poesy-qwen</module>
+		<module>poesy-article</module>
 	</modules>
 	<name>poesy-project</name>
 	<description>Demo project for Spring Boot</description>

@@ -27,6 +27,10 @@ spring:
           uri: lb://poesy-question
           predicates:
             - Path=/api/question/**
+        - id: poesy-article
+          uri: lb://poesy-article
+          predicates:
+            - Path=/api/article/**
         - id: poesy-image
           uri: lb://poesy-image
           predicates:
