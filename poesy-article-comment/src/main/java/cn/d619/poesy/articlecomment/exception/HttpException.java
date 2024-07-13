@@ -1,4 +1,4 @@
-package cn.d619.poesy.question.exception;
+package cn.d619.poesy.articlecomment.exception;
 
 import org.springframework.http.HttpStatus;
 

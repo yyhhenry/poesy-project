@@ -41,7 +41,7 @@ public class ArticleCommentController {
         String content = addArticleCommentDTO.getContent();
         String articleId = addArticleCommentDTO.getArticleId();
         LocalDateTime createdTime = addArticleCommentDTO.getCreatedTime();
-        articlecommentService.addArticleComment(id, content, authorEmail, articleId, createdTime);
+        articlecommentService.addArticleComment(content, authorEmail, articleId);
         return new MsgDTO("评论上传成功");
     }
 

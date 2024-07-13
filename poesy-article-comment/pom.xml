@@ -10,7 +10,7 @@
     </parent>
 
     <groupId>cn.d619</groupId>
-    <artifactId>poesy-article-comment</artifactId>
+    <artifactId>poesy-articlecomment</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
