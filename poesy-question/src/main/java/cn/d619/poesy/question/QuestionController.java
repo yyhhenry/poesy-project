@@ -67,8 +67,11 @@ public class QuestionController {
     }
 
     @GetMapping("/api/question/latest")
-    public ListQuestionBriefDTO latestQuestions(@RequestBody PaginationRequest paginationRequest) {
+    public ListQuestionBriefDTO latestQuestions(@RequestParam("offset") String offset) {
         // return questionService.latestQuestions(paginationRequest);
-
+        ListQuestionBriefDTO listQuestionBriefDTO = new ListQuestionBriefDTO(
+                questionService.latestQuestions(paginationRequest));
+        // questionService.latestQuestions(paginationRequest);
+        return listQuestionBriefDTO;
     }
 }
