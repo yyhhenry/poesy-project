@@ -36,6 +36,9 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
+    private RedisUserExistsService redisUserExistsService;
+
+    @Autowired
     private JwtUtil jwtUtil;
 
     private UserPO getUserByEmail(String email) {
@@ -47,7 +50,16 @@ public class UserService {
     }
 
     public boolean userExists(String email) {
-        return getUserByEmail(email) != null;
+        Boolean cache = redisUserExistsService.userExists(email);
+        if (cache != null) {
+            return cache;
+        }
+        if (getUserByEmail(email) != null) {
+            redisUserExistsService.cacheUser(email);
+            return true;
+        }
+        redisUserExistsService.cacheNotExistsUser(email);
+        return false;
     }
 
     private String generateCode() {
@@ -136,7 +148,8 @@ public class UserService {
         if (!userVerificationDTO.getCode().equals(code)) {
             throw new AuthException("验证码错误");
         }
-        UserPO userPO = new UserPO(userVerificationDTO.getEmail(), userVerificationDTO.getPassword());
+        redisUserExistsService.cacheUser(email);
+        UserPO userPO = new UserPO(email, userVerificationDTO.getPassword());
         userMapper.insert(userPO);
         redisUserVerificationService.deleteUserVerification(email);
     }
