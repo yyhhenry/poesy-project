@@ -38,20 +38,20 @@ public class QuestionController {
         String title = addQuestionDTO.getTitle();
         String content = addQuestionDTO.getContent();
         questionService.addQuestion(title, content, authorEmail);
-        return new MsgDTO("问题上传成功");
+        return new MsgDTO("评论上传成功");
     }
 
-    @GetMapping("/api/question/by/{id}")
+    @GetMapping("/api/article-comment/by/{id}")
     public QuestionBriefDTO[] questionsBy(@RequestBody PaginationRequest paginationRequest) {
         return questionService.questionsBy(paginationRequest);
     }
 
-    @GetMapping("/api/question/{id}")
+    @GetMapping("/api/article-comment/{id}")
     public QuestionPO getQuestion(@PathVariable("id") String id) {
         return questionService.getQuestion(id);
     }
 
-    @GetMapping("/api/question/latest")
+    @GetMapping("/api/article-comment/latest")
     public QuestionBriefDTO[] latestQuestions(@RequestBody PaginationRequest paginationRequest) {
         return questionService.latestQuestions(paginationRequest);
     }

@@ -1,36 +1,43 @@
 {
-    "configurations": [
-        {
-            "type": "java",
-            "name": "ImageApplication",
-            "request": "launch",
-            "mainClass": "cn.d619.poesy.image.ImageApplication",
-            "projectName": "poesy-image",
-            "envFile": "${workspaceFolder}/.env"
-        },
-        {
-            "type": "java",
-            "name": "QuestionApplication",
-            "request": "launch",
-            "mainClass": "cn.d619.poesy.question.QuestionApplication",
-            "projectName": "poesy-question",
-            "envFile": "${workspaceFolder}/.env"
-        },
-        {
-            "type": "java",
-            "name": "UserApplication",
-            "request": "launch",
-            "mainClass": "cn.d619.poesy.user.UserApplication",
-            "projectName": "poesy-user",
-            "envFile": "${workspaceFolder}/.env"
-        },
-        {
-            "type": "java",
-            "name": "GatewayApplication",
-            "request": "launch",
-            "mainClass": "cn.d619.poesy.gateway.GatewayApplication",
-            "projectName": "poesy-gateway",
-            "envFile": "${workspaceFolder}/.env"
-        }
-    ]
+  "configurations": [
+    {
+      "type": "java",
+      "name": "ArticleCommentApplication",
+      "request": "launch",
+      "mainClass": "cn.d619.poesy.articlecomment.ArticleCommentApplication",
+      "projectName": "poesy-article-comment"
+    },
+    {
+      "type": "java",
+      "name": "ImageApplication",
+      "request": "launch",
+      "mainClass": "cn.d619.poesy.image.ImageApplication",
+      "projectName": "poesy-image",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "QuestionApplication",
+      "request": "launch",
+      "mainClass": "cn.d619.poesy.question.QuestionApplication",
+      "projectName": "poesy-question",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "UserApplication",
+      "request": "launch",
+      "mainClass": "cn.d619.poesy.user.UserApplication",
+      "projectName": "poesy-user",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "GatewayApplication",
+      "request": "launch",
+      "mainClass": "cn.d619.poesy.gateway.GatewayApplication",
+      "projectName": "poesy-gateway",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
 }

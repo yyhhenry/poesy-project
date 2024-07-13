@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import cn.d619.poesy.articlecomment.ArticleCommentApplication;
-
+import cn.d619.poesy.articlecomment.pojo.po.ArticleCommentPO;
 import cn.d619.poesy.articlecomment.service.ArticleCommentService;
 
 @SpringBootTest(classes = { ArticleCommentApplication.class })
@@ -18,9 +18,15 @@ public class ArticleCommentServiceTest {
     void testAddArticleComment() {
         String email = "test@example.com";
 
-        articlecommentService.addArticleComment("id", "content", authorEmail, 
-        "articleId", "createdTime");
+        articlecommentService.addArticleComment("id", "content", authorEmail,
+                "articleId", "createdTime");
 
-        
+    }
+
+    @Test
+    void testGetArticleComment() {
+        ArticleCommentPO articlecommentPO = new ArticleCommentPO();
+
+        articlecommentService.getArticleComment("id");
     }
 }
