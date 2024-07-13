@@ -5,6 +5,13 @@
       "name": "ArticleCommentApplication",
       "request": "launch",
       "mainClass": "cn.d619.poesy.articlecomment.ArticleCommentApplication",
+      "projectName": "poesy-articlecomment"
+    },
+    {
+      "type": "java",
+      "name": "ArticleCommentApplication",
+      "request": "launch",
+      "mainClass": "cn.d619.poesy.articlecomment.ArticleCommentApplication",
       "projectName": "poesy-article-comment"
     },
     {
