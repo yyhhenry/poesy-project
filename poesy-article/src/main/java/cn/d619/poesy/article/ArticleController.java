@@ -48,16 +48,8 @@ public class ArticleController {
     }
 
     @GetMapping("/api/article/by-user")
-    public ListArticleBriefDTO articlesBy(@RequestParam("email") String email,
-            @RequestHeader("Authorization") String auth) {
-        if (auth == null || !auth.startsWith("Bearer ")) {
-            throw new HttpException(HttpStatus.UNAUTHORIZED, "Missing or invalid token");
-        }
-        String token = auth.substring(7); // remove "Bearer "
-        jwtUtil.validateTokenWithType(token, "access");
-
-        List<ArticleBriefDTO> articleBriefDTOList = articleService.articlesBy(email);
-        return new ListArticleBriefDTO(articleBriefDTOList);
+    public ListArticleBriefDTO articlesBy(@RequestParam("email") String email) {
+        return new ListArticleBriefDTO(articleService.articlesBy(email));
     }
 
     @GetMapping("/api/article/{id}")
