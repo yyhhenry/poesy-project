@@ -20,7 +20,6 @@ public class RedisUserExistsService {
         String key = keyFrom(email);
         redisTemplate.opsForValue().set(key, "not-exists");
         redisTemplate.expire(key, 20, java.util.concurrent.TimeUnit.MINUTES);
-        redisTemplate.delete(keyFrom(email));
     }
 
     public void cacheUser(String email) {
