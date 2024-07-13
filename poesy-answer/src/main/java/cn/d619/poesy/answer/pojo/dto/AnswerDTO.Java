@@ -5,9 +5,10 @@ import cn.d619.poesy.user.dto.UserDTO;
 import lombok.Data;
 
 @Data
-public class AnswerDTO {
-    private Long id;
-    private Long questionId;
-    private String text;
+public class AnswerDTO {    
+    private String id;
+    private String questionId;
+    private String content;
     private UserDTO author;
+    private LocalDateTime createdTime;
 }

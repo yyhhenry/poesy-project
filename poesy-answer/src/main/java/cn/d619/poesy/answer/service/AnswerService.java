@@ -21,10 +21,6 @@ public class AnswerService {
         return answerRepository.save(answer);
     }
 
-    public Answer findAnswerById(Long id) {
-        return answerRepository.findById(id).orElse(null);
-    }
-
     public AnswerPO getAnswer(String id) {
         return AnswerMapper.selectById(id);
     }
