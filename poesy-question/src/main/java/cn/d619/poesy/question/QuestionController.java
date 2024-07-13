@@ -11,7 +11,7 @@ import cn.d619.poesy.question.service.QuestionService;
 import cn.d619.poesy.question.util.JwtUtil;
 import cn.d619.poesy.question.pojo.dto.AddQuestionDTO;
 import cn.d619.poesy.question.pojo.dto.ListQuestionBriefDTO;
-import cn.d619.poesy.question.pojo.dto.MsgDTO;
+
 import cn.d619.poesy.question.pojo.dto.PaginationRequest;
 import cn.d619.poesy.question.pojo.dto.QuestionBriefDTO;
 import cn.d619.poesy.question.pojo.po.QuestionPO;

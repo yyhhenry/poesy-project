@@ -3,7 +3,7 @@ package cn.d619.poesy.question.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import cn.d619.poesy.question.exception.HttpException;
 import cn.d619.poesy.question.mapper.QuestionMapper;
@@ -11,8 +11,6 @@ import cn.d619.poesy.question.pojo.dto.PaginationRequest;
 import cn.d619.poesy.question.pojo.dto.QuestionBriefDTO;
 import cn.d619.poesy.question.pojo.po.QuestionPO;
 import java.util.List;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 @Service
 public class QuestionService {
@@ -50,19 +48,7 @@ public class QuestionService {
                 .map(questionPO -> new QuestionBriefDTO(questionPO.getId(), questionPO.getTitle(),
                         questionPO.getCreatedTime().toString(), questionPO.getAuthorEmail()))
                 .toList();
-        // return questionPOList.stream()
-        // .map(questionPO -> new QuestionBriefDTO(questionPO.getId(),
-        // questionPO.getTitle()))
-        // .toList();
-        // throw new UnsupportedOperationException();
-        // List<QuestionBriefDTO> questionsby = questionPOList.stream()
-        // .map(questionPO -> new QuestionBriefDTO(questionPO.getId(),
-        // questionPO.getTitle()))
-        // .skip(paginationRequest.getPage() *
-        // paginationRequest.getSize()).limit(paginationRequest.getSize())
-        // .toList();
-        // .skip(paginationRequest.getPage() * paginationRequest.getSize())
-        // .limit(paginationRequest.getSize())
+
     }
 
     public List<QuestionBriefDTO> latestQuestions(PaginationRequest paginationRequest) {
