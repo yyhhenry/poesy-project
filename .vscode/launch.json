@@ -5,7 +5,8 @@
             "name": "AnswerApplication",
             "request": "launch",
             "mainClass": "cn.d619.poesy.answer.AnswerApplication",
-            "projectName": "poesy-answer"
+            "projectName": "poesy-answer",
+            "envFile": "${workspaceFolder}/.env"
         },
         {
             "type": "java",

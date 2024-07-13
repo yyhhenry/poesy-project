@@ -28,11 +28,14 @@ public class AnswerService {
 
     public ListAnswerDTO getAnswerByQuestion(String questionId) {
         QueryWrapper<AnswerPO> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select("content", "author_email", "created_time");
+        queryWrapper.select("id", "content", "author_email", "created_time");
         queryWrapper.eq("question_id", questionId);
         List<AnswerPO> answers = answerMapper.selectList(queryWrapper);
         List<AnswerDTO> answerDTOs = answers.stream()
-                .map(answer -> new AnswerDTO(answer.getContent(), answer.getAuthorEmail(), answer.getCreatedTime()))
+                .map(answer -> new AnswerDTO(answer.getId(),
+                        answer.getContent(),
+                        answer.getAuthorEmail(),
+                        answer.getCreatedTime()))
                 .toList();
         return new ListAnswerDTO(answerDTOs);
     }

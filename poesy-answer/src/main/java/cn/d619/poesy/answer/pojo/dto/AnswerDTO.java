@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 public class AnswerDTO {
+    private String id;
     private String content;
     private String authorEmail;
     private LocalDateTime createdTime;
@@ -12,7 +13,8 @@ public class AnswerDTO {
     public AnswerDTO() {
     }
 
-    public AnswerDTO(String content, String authorEmail, LocalDateTime createdTime) {
+    public AnswerDTO(String id, String content, String authorEmail, LocalDateTime createdTime) {
+        this.id = id;
         this.content = content;
         this.authorEmail = authorEmail;
         this.createdTime = createdTime;
