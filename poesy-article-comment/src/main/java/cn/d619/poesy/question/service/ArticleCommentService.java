@@ -11,7 +11,15 @@ public class ArticleCommentService {
     @Autowired
     private ArticleCommentMapper articlecommentMapper;
 
-    public void addArticleComment(ArticleCommentPO articlecommentPO) {
+     public String addArticleComment(String id,  String content, 
+     String authorEmail,String articleId ,String createdTime) {
+        ArticleCommentPO articlecommentPO = new ArticleCommentPO(id, content, authorEmail,articleId,createdTime);
         articlecommentMapper.insert(articlecommentPO);
+        return articlecommentPO.getId();
     }
+
+     public ArticleCommentPO getArticleComment(String id) {
+        return articlecommentMapper.selectById(id);
+    }
+
 }
