@@ -48,7 +48,7 @@ public class ArticleController {
     }
 
     @GetMapping("/api/article/by-user")
-    public List<ArticleBriefDTO> articlesBy(@RequestParam("email") String email,
+    public ListArticleBriefDTO articlesBy(@RequestParam("email") String email,
             @RequestHeader("Authorization") String auth) {
         if (auth == null || !auth.startsWith("Bearer ")) {
             throw new HttpException(HttpStatus.UNAUTHORIZED, "Missing or invalid token");
@@ -56,9 +56,8 @@ public class ArticleController {
         String token = auth.substring(7); // remove "Bearer "
         jwtUtil.validateTokenWithType(token, "access");
 
-        return articleService.articlesBy(email);
-
-        // throw new UnsupportedOperationException();
+        List<ArticleBriefDTO> articleBriefDTOList = articleService.articlesBy(email);
+        return new ListArticleBriefDTO(articleBriefDTOList);
     }
 
     @GetMapping("/api/article/{id}")
@@ -67,12 +66,10 @@ public class ArticleController {
     }
 
     @GetMapping("/api/article/latest")
-    public ListArticleBriefDTO latestArticles(@RequestParam("offset") String offset) {
-        // return articleService.latestArticles(paginationRequest);
-        ListArticleBriefDTO listArticleBriefDTO = new ListArticleBriefDTO(
-                articleService.latestArticles(new PaginationRequest(Integer.parseInt(offset), 6)));
-        // articleService.latestArticles(paginationRequest);
-        return listArticleBriefDTO;
+    public ListArticleBriefDTO latestArticles(@RequestParam("offset") Long offset) {
+        PaginationRequest paginationRequest = new PaginationRequest(offset);
+        List<ArticleBriefDTO> articleBriefDTOList = articleService.latestArticles(paginationRequest);
+        return new ListArticleBriefDTO(articleBriefDTOList);
     }
 
 }
