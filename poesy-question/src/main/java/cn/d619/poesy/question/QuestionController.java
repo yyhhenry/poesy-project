@@ -48,7 +48,7 @@ public class QuestionController {
     }
 
     @GetMapping("/api/question/by-user")
-    public List<QuestionBriefDTO> questionsBy(@RequestParam("email") String email,
+    public ListQuestionBriefDTO questionsBy(@RequestParam("email") String email,
             @RequestHeader("Authorization") String auth) {
         if (auth == null || !auth.startsWith("Bearer ")) {
             throw new HttpException(HttpStatus.UNAUTHORIZED, "Missing or invalid token");
@@ -56,7 +56,7 @@ public class QuestionController {
         String token = auth.substring(7); // remove "Bearer "
         jwtUtil.validateTokenWithType(token, "access");
 
-        return questionService.questionsBy(email);
+        return new ListQuestionBriefDTO(questionService.questionsBy(email));
 
         // throw new UnsupportedOperationException();
     }
