@@ -6,22 +6,21 @@ import lombok.Data;
 
 @Data
 public class AddArticleCommentDTO {
-    private String id;
+
     private String content;
-    private String authorEmail;
+
     private String articleId;
-    private LocalDateTime createdTime;
 
     public AddArticleCommentDTO() {
     }
 
-    public AddArticleCommentDTO(String id, String content, String authorEmail,
-            String articleId, LocalDateTime createdTime) {
-        this.id = id;
+    public AddArticleCommentDTO(String content,
+            String articleId) {
+
         this.content = content;
-        this.authorEmail = authorEmail;
+
         this.articleId = articleId;
-        this.createdTime = createdTime;
+
     }
 
 }
