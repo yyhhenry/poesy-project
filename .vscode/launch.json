@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "AnswerApplication",
+            "request": "launch",
+            "mainClass": "cn.d619.poesy.answer.AnswerApplication",
+            "projectName": "poesy-answer"
+        },
+        {
+            "type": "java",
             "name": "QwenApplication",
             "request": "launch",
             "mainClass": "cn.d619.poesy.qwen.QwenApplication",

@@ -1,6 +1,8 @@
 package cn.d619.poesy.answer.pojo.po;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
+
 import com.baomidou.mybatisplus.annotation.FieldStrategy;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -21,8 +23,8 @@ public class AnswerPO {
     public AnswerPO() {
     }
 
-    public AnswerPO(String id, String questionId, String content, String authorEmail) {
-        this.id = id;
+    public AnswerPO(String questionId, String content, String authorEmail) {
+        this.id = UUID.randomUUID().toString();
         this.questionId = questionId;
         this.content = content;
         this.authorEmail = authorEmail;
