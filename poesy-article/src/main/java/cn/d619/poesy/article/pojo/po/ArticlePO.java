@@ -24,7 +24,7 @@ public class ArticlePO {
     public ArticlePO() {
     }
 
-    public ArticlePO(String id, String title, String content, String authorEmail) {
+    public ArticlePO(String title, String content, String authorEmail) {
         this.id = UUID.randomUUID().toString();
         this.title = title;
         this.content = content;

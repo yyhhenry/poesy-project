@@ -12,16 +12,17 @@ import cn.d619.poesy.article.pojo.dto.AddArticleDTO;
 import cn.d619.poesy.article.pojo.dto.MsgDTO;
 import cn.d619.poesy.article.pojo.dto.PaginationRequest;
 import cn.d619.poesy.article.pojo.dto.ArticleBriefDTO;
-import cn.d619.poesy.article.pojo.po.ArticlePO;
 import cn.d619.poesy.article.exception.HttpException;
+import cn.d619.poesy.article.pojo.po.ArticlePO;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 public class ArticleController {
     @Autowired
     private ArticleService articleService;
-    
+
     @Autowired
     private JwtUtil jwtUtil;
 
@@ -41,10 +42,9 @@ public class ArticleController {
         return new MsgDTO("文章上传成功");
     }
 
-    @GetMapping("/api/article/search")
-    public MsgDTO searchArticle(@RequestParam("title") String title) {
-        articleService.searchArticle(title);
-        return new MsgDTO(true, "文章搜索成功");
+    @GetMapping("/api/article/{id}")
+    public ArticlePO getArticle(@PathVariable("id") String id) {
+        return articleService.getArticle(id);
     }
-    
+
 }
