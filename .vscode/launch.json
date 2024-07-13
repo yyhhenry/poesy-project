@@ -1,6 +1,13 @@
 {
     "configurations": [
-    
+        {
+            "type": "java",
+            "name": "ArticleCommentApplication",
+            "request": "launch",
+            "mainClass": "cn.d619.poesy.articlecomment.ArticleCommentApplication",
+            "projectName": "poesy-article-comment",
+            "envFile": "${workspaceFolder}/.env"
+        },
         {
             "type": "java",
             "name": "AnswerApplication",
@@ -56,15 +63,6 @@
             "mainClass": "cn.d619.poesy.article.ArticleApplication",
             "projectName": "poesy-article",
             "envFile": "${workspaceFolder}/.env"
-        },
-        {
-            "type": "java",
-            "name": "ArticleCommentApplication",
-            "request": "launch",
-            "mainClass": "cn.d619.poesy.article.ArticleApplication",
-            "projectName": "poesy-article-comment",
-            "envFile": "${workspaceFolder}/.env"
         }
-      
     ]
 }
