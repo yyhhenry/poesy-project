@@ -4,7 +4,7 @@ server:
 
 spring:
   application:
-    name: poesy-articlecomment
+    name: poesy-article-comment
   datasource:
     url: jdbc:mysql://localhost:3306/poesy?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
     username: ${MYSQL_USERNAME}
