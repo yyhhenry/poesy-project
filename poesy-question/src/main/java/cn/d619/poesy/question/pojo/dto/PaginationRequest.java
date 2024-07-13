@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class PaginationRequest {
-    private int limit;
-    private int start;
+    private int page;
+    private int size;
 }
