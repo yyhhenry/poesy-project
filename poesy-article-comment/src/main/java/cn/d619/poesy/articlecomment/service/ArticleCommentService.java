@@ -28,10 +28,10 @@ public class ArticleCommentService {
     }
 
     public List<ArticleCommentDTO> getCommentsByArticle(String articleId) {
-        // ensureValidPaginationRequest(paginationRequest);
         QueryWrapper<ArticleCommentPO> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("article_comment", articleId);
-        queryWrapper.select("id", "author_email", "created_time");
+        queryWrapper.eq("article_id", articleId);
+        queryWrapper.select("id", "content", "author_email", "created_time");
+        queryWrapper.orderByAsc("created_time");
         List<ArticleCommentPO> articleCommentPOList = articleCommentMapper.selectList(queryWrapper);
         return articleCommentPOList.stream()
                 .map(articleCommentPO -> new ArticleCommentDTO(
@@ -40,7 +40,6 @@ public class ArticleCommentService {
                         articleCommentPO.getAuthorEmail(),
                         articleCommentPO.getCreatedTime().toString()))
                 .toList();
-
     }
 
 }

@@ -43,6 +43,7 @@ public class QuestionService {
         QueryWrapper<QuestionPO> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("author_email", authorEmail);
         queryWrapper.select("id", "title", "author_email", "created_time");
+        queryWrapper.orderByDesc("created_time");
         List<QuestionPO> questionPOList = questionMapper.selectList(queryWrapper);
         return questionPOList.stream()
                 .map(questionPO -> new QuestionBriefDTO(questionPO.getId(), questionPO.getTitle(),
