@@ -45,9 +45,7 @@ public class QuestionController {
 
         String title = addQuestionDTO.getTitle();
         String content = addQuestionDTO.getContent();
-        String uploadmsg = questionService.addQuestion(title, content, authorEmail);
-        uploadDTO upload = new uploadDTO(uploadmsg);
-        return upload;
+        return new uploadDTO(questionService.addQuestion(title, content, authorEmail));
     }
 
     @GetMapping("/api/question/by-user")
