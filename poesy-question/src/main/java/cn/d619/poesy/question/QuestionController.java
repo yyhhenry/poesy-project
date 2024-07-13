@@ -22,7 +22,7 @@ import cn.d619.poesy.question.exception.HttpException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import cn.d619.poesy.question.pojo.dto.uploadDTO;
+import cn.d619.poesy.question.pojo.dto.UploadDTO;
 
 @RestController
 public class QuestionController {
@@ -33,7 +33,7 @@ public class QuestionController {
     private JwtUtil jwtUtil;
 
     @PostMapping("/api/question/upload")
-    public uploadDTO addQuestion(@RequestBody AddQuestionDTO addQuestionDTO,
+    public UploadDTO addQuestion(@RequestBody AddQuestionDTO addQuestionDTO,
             @RequestHeader("Authorization") String auth) {
         if (auth == null || !auth.startsWith("Bearer ")) {
             throw new HttpException(HttpStatus.UNAUTHORIZED, "Missing or invalid token");
@@ -45,7 +45,7 @@ public class QuestionController {
 
         String title = addQuestionDTO.getTitle();
         String content = addQuestionDTO.getContent();
-        return new uploadDTO(questionService.addQuestion(title, content, authorEmail));
+        return new UploadDTO(questionService.addQuestion(title, content, authorEmail));
     }
 
     @GetMapping("/api/question/by-user")
