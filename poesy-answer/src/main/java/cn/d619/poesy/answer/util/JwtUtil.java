@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
+import cn.d619.poesy.answer.exception.HttpException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -12,7 +13,7 @@ import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 
 @Component
-public class AnswerUtil {
+public class JwtUtil {
     @Value("${SECRET_KEY}")
     private String secret;
     private Key key;
@@ -50,4 +51,5 @@ public class AnswerUtil {
             throw new HttpException(HttpStatus.UNAUTHORIZED, "Invalid token");
         }
     }
+
 }
