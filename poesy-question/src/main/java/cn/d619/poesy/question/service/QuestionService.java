@@ -3,11 +3,16 @@ package cn.d619.poesy.question.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
+import com.alibaba.nacos.common.http.param.Query;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import cn.d619.poesy.question.exception.HttpException;
 import cn.d619.poesy.question.mapper.QuestionMapper;
 import cn.d619.poesy.question.pojo.dto.PaginationRequest;
 import cn.d619.poesy.question.pojo.dto.QuestionBriefDTO;
 import cn.d619.poesy.question.pojo.po.QuestionPO;
+import java.util.List;
 
 @Service
 public class QuestionService {
@@ -33,17 +38,37 @@ public class QuestionService {
         return questionMapper.selectById(id);
     }
 
-    public QuestionBriefDTO[] questionsBy(PaginationRequest paginationRequest, String authorEmail) {
+    public List<QuestionBriefDTO> questionsBy(PaginationRequest paginationRequest, String authorEmail) {
         ensureValidPaginationRequest(paginationRequest);
-        /// TODO: implement this method
+        QueryWrapper<QuestionPO> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("author_email", authorEmail);
+        List<QuestionPO> questionPOList = questionMapper.selectList(queryWrapper);
+        // List<QuestionBriefDTO> questionsby = questionPOList.stream()
+        // .map(questionPO -> new QuestionBriefDTO(questionPO.getId(),
+        // questionPO.getTitle()))
+        // .skip(paginationRequest.getPage() *
+        // paginationRequest.getSize()).limit(paginationRequest.getSize())
+        // .toList();
+        // .skip(paginationRequest.getPage() * paginationRequest.getSize())
+        // .limit(paginationRequest.getSize())
+        return questionPOList.stream()
+                .map(questionPO -> new QuestionBriefDTO(questionPO.getId(), questionPO.getTitle()))
+                .skip(paginationRequest.getPage() * paginationRequest.getSize()).limit(paginationRequest.getSize())
+                .toList();
+        // throw new UnsupportedOperationException();
 
-        throw new UnsupportedOperationException();
     }
 
-    public QuestionBriefDTO[] latestQuestions(PaginationRequest paginationRequest) {
+    public List<QuestionBriefDTO> latestQuestions(PaginationRequest paginationRequest) {
         ensureValidPaginationRequest(paginationRequest);
-        /// TODO: implement this method
-        throw new UnsupportedOperationException();
+        QueryWrapper<QuestionPO> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("created_time");
+        List<QuestionPO> questionPOList = questionMapper.selectList(queryWrapper);
+        return questionPOList.stream()
+                .map(questionPO -> new QuestionBriefDTO(questionPO.getId(), questionPO.getTitle()))
+                .skip(paginationRequest.getPage() * paginationRequest.getSize()).limit(paginationRequest.getSize())
+                .toList();
+        // throw new UnsupportedOperationException();
     }
 
 }

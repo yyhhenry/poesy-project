@@ -30,4 +30,5 @@ public class QuestionPO {
         this.content = content;
         this.authorEmail = authorEmail;
     }
+
 }
