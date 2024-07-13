@@ -30,6 +30,7 @@ public class AnswerService {
         QueryWrapper<AnswerPO> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("id", "content", "author_email", "created_time");
         queryWrapper.eq("question_id", questionId);
+        queryWrapper.orderByDesc("created_time");
         List<AnswerPO> answers = answerMapper.selectList(queryWrapper);
         List<AnswerDTO> answerDTOs = answers.stream()
                 .map(answer -> new AnswerDTO(answer.getId(),

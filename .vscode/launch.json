@@ -2,6 +2,14 @@
     "configurations": [
         {
             "type": "java",
+            "name": "ArticleCommentApplication",
+            "request": "launch",
+            "mainClass": "cn.d619.poesy.articlecomment.ArticleCommentApplication",
+            "projectName": "poesy-article-comment",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
             "name": "AnswerApplication",
             "request": "launch",
             "mainClass": "cn.d619.poesy.answer.AnswerApplication",

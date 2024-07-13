@@ -43,3 +43,7 @@ spring:
           uri: lb://poesy-answer
           predicates:
             - Path=/api/answer/**
+        - id: poesy-article-comment
+          uri: lb://poesy-article-comment
+          predicates:
+            - Path=/api/article-comment/**

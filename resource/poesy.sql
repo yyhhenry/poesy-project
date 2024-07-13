@@ -1,5 +1,5 @@
 -- Create the database and the user table
-DROP DATABASE IF EXISTS `poesy`;
+-- DROP DATABASE IF EXISTS `poesy`;
 CREATE DATABASE IF NOT EXISTS `poesy`;
 USE `poesy`;
 -- Create the user table
@@ -9,8 +9,8 @@ CREATE TABLE IF NOT EXISTS `user` (
     -- Avatar will be got from gravatar
     PRIMARY KEY (`email`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
-INSERT INTO `user` (`email`, `password`)
-VALUES ('test@example.com', 'test');
+-- INSERT INTO `user` (`email`, `password`)
+-- VALUES ('test@example.com', 'test');
 -- In redis we have `user-verification` for users who have not activated their account
 -- "user-verification:<email>" -> {password: <password>, code: <code>}
 -- Create the image table

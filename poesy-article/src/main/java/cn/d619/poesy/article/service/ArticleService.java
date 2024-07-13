@@ -42,6 +42,7 @@ public class ArticleService {
         QueryWrapper<ArticlePO> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("author_email", authorEmail);
         queryWrapper.select("id", "title", "author_email", "created_time");
+        queryWrapper.orderByDesc("created_time");
         List<ArticlePO> articlePOList = articleMapper.selectList(queryWrapper);
         return articlePOList.stream()
                 .map(articlePO -> new ArticleBriefDTO(articlePO.getId(), articlePO.getTitle(),
