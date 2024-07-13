@@ -24,4 +24,8 @@ public class AnswerService {
     public Answer findAnswerById(Long id) {
         return answerRepository.findById(id).orElse(null);
     }
+
+    public AnswerPO getAnswer(String id) {
+        return AnswerMapper.selectById(id);
+    }
 }
