@@ -1,4 +1,4 @@
-package cn.d619.poesy.question.util;
+package cn.d619.poesy.articlecomment.util;
 
 import java.security.Key;
 import org.springframework.beans.factory.annotation.Value;
