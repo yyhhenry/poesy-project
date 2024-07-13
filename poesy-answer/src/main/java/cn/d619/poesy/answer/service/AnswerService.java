@@ -1,10 +1,14 @@
 package cn.d619.poesy.answer.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import cn.d619.poesy.answer.mapper.AnswerMapper;
+import cn.d619.poesy.answer.pojo.dto.AnswerDTO;
+import cn.d619.poesy.answer.pojo.dto.ListAnswerDTO;
 import cn.d619.poesy.answer.pojo.po.AnswerPO;
 
 @Service
@@ -22,9 +26,14 @@ public class AnswerService {
         return answerMapper.selectById(id);
     }
 
-    public AnswerPO getAnswerByQuestion(String questionId) {
+    public ListAnswerDTO getAnswerByQuestion(String questionId) {
         QueryWrapper<AnswerPO> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("content", "author_email", "created_time");
         queryWrapper.eq("question_id", questionId);
-        return answerMapper.selectOne(queryWrapper);
+        List<AnswerPO> answers = answerMapper.selectList(queryWrapper);
+        List<AnswerDTO> answerDTOs = answers.stream()
+                .map(answer -> new AnswerDTO(answer.getContent(), answer.getAuthorEmail(), answer.getCreatedTime()))
+                .toList();
+        return new ListAnswerDTO(answerDTOs);
     }
 }

@@ -3,17 +3,17 @@ package cn.d619.poesy.answer.pojo.dto;
 import lombok.Data;
 
 @Data
-public class uploadDTO {
+public class UploadDTO {
     String id;
 
     public String getId() {
         return id;
     }
 
-    public uploadDTO() {
+    public UploadDTO() {
     }
 
-    public uploadDTO(String id) {
+    public UploadDTO(String id) {
         this.id = id;
     }
 
