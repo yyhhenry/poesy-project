@@ -13,12 +13,12 @@ import cn.d619.poesy.question.pojo.dto.AddQuestionDTO;
 import cn.d619.poesy.question.pojo.dto.ListQuestionBriefDTO;
 
 import cn.d619.poesy.question.pojo.dto.PaginationRequest;
-import cn.d619.poesy.question.pojo.dto.QuestionBriefDTO;
+
 import cn.d619.poesy.question.pojo.po.QuestionPO;
 import cn.d619.poesy.question.exception.HttpException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import java.util.List;
+
 import cn.d619.poesy.question.pojo.dto.uploadDTO;
 
 @RestController
