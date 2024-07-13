@@ -1,6 +1,7 @@
 package cn.d619.poesy.article.pojo.po;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import com.baomidou.mybatisplus.annotation.FieldStrategy;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -24,7 +25,7 @@ public class ArticlePO {
     }
 
     public ArticlePO(String id, String title, String content, String authorEmail) {
-        this.id = id;
+        this.id = UUID.randomUUID().toString();
         this.title = title;
         this.content = content;
         this.authorEmail = authorEmail;
