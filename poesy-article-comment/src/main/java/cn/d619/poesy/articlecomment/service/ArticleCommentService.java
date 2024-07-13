@@ -16,7 +16,6 @@ public class ArticleCommentService {
         ArticleCommentPO articlecommentPO = new ArticleCommentPO(content, authorEmail, articleId);
         articlecommentMapper.insert(articlecommentPO);
         return articlecommentPO.getId();
-
     }
 
     public ArticleCommentPO getArticleComment(String id) {
