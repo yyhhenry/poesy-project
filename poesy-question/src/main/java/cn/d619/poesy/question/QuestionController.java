@@ -1,6 +1,9 @@
 package cn.d619.poesy.question;
 
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,7 +16,7 @@ import cn.d619.poesy.question.pojo.dto.AddQuestionDTO;
 import cn.d619.poesy.question.pojo.dto.ListQuestionBriefDTO;
 
 import cn.d619.poesy.question.pojo.dto.PaginationRequest;
-
+import cn.d619.poesy.question.pojo.dto.QuestionBriefDTO;
 import cn.d619.poesy.question.pojo.po.QuestionPO;
 import cn.d619.poesy.question.exception.HttpException;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -67,11 +70,9 @@ public class QuestionController {
     }
 
     @GetMapping("/api/question/latest")
-    public ListQuestionBriefDTO latestQuestions(@RequestParam("offset") String offset) {
-        // return questionService.latestQuestions(paginationRequest);
-        ListQuestionBriefDTO listQuestionBriefDTO = new ListQuestionBriefDTO(
-                questionService.latestQuestions(new PaginationRequest(Integer.parseInt(offset), 6)));
-        // questionService.latestQuestions(paginationRequest);
-        return listQuestionBriefDTO;
+    public ListQuestionBriefDTO latestQuestions(@RequestParam("offset") Long offset) {
+        PaginationRequest paginationRequest = new PaginationRequest(offset);
+        List<QuestionBriefDTO> briefs = questionService.latestQuestions(paginationRequest);
+        return new ListQuestionBriefDTO(briefs);
     }
 }

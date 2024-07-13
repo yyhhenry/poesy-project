@@ -6,9 +6,9 @@ import java.util.List;
 
 @Data
 public class ListQuestionBriefDTO {
-    private List<QuestionBriefDTO> listQuestionBriefDTO;
+    private List<QuestionBriefDTO> questionBriefs;
 
-    public ListQuestionBriefDTO(List<QuestionBriefDTO> listQuestionBriefDTO) {
-        this.listQuestionBriefDTO = listQuestionBriefDTO;
+    public ListQuestionBriefDTO(List<QuestionBriefDTO> questionBriefs) {
+        this.questionBriefs = questionBriefs;
     }
 }
