@@ -28,7 +28,7 @@ public class QuestionController {
     private JwtUtil jwtUtil;
 
     @PostMapping("/api/question/upload")
-    public MsgDTO addQuestion(@RequestBody AddQuestionDTO addQuestionDTO, @RequestHeader("Authorization") String auth) {
+    public String addQuestion(@RequestBody AddQuestionDTO addQuestionDTO, @RequestHeader("Authorization") String auth) {
         if (auth == null || !auth.startsWith("Bearer ")) {
             throw new HttpException(HttpStatus.UNAUTHORIZED, "Missing or invalid token");
         }
@@ -39,8 +39,8 @@ public class QuestionController {
 
         String title = addQuestionDTO.getTitle();
         String content = addQuestionDTO.getContent();
-        questionService.addQuestion(title, content, authorEmail);
-        return new MsgDTO("问题上传成功");
+
+        return questionService.addQuestion(title, content, authorEmail);
     }
 
     @GetMapping("/api/question/by-user")
