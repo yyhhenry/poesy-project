@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.http.HttpStatus;
 import cn.d619.poesy.question.service.QuestionService;
 import cn.d619.poesy.question.util.JwtUtil;
@@ -41,9 +42,13 @@ public class QuestionController {
         return new MsgDTO("问题上传成功");
     }
 
-    @GetMapping("/api/question/by/{id}")
-    public QuestionBriefDTO[] questionsBy(@RequestBody PaginationRequest paginationRequest) {
-        return questionService.questionsBy(paginationRequest);
+    @GetMapping("/api/question/by-user")
+    public QuestionBriefDTO[] questionsBy(@RequestParam("email") String email, @RequestParam("page") int page,
+            @RequestParam("size") int size,
+            @RequestHeader("Authorization") String auth) {
+
+        /// TODO
+        throw new UnsupportedOperationException();
     }
 
     @GetMapping("/api/question/{id}")
