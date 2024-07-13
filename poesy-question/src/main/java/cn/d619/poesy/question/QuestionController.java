@@ -50,6 +50,8 @@ public class QuestionController {
         if (auth == null || !auth.startsWith("Bearer ")) {
             throw new HttpException(HttpStatus.UNAUTHORIZED, "Missing or invalid token");
         }
+        String token = auth.substring(7); // remove "Bearer "
+        jwtUtil.validateTokenWithType(token, "access");
         PaginationRequest paginationrequest = new PaginationRequest(page, size);
 
         return questionService.questionsBy(paginationrequest, email);
