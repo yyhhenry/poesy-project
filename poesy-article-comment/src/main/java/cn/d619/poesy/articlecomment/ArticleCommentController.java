@@ -45,9 +45,6 @@ public class ArticleCommentController {
         return new MsgDTO("评论上传成功");
     }
 
-    public String addArticleComment(String id, String content,
-            String authorEmail, String articleId, LocalDateTime createdTime)
-
     @GetMapping("/api/article-comment/{id}")
     public ArticleCommentPO getArticleComment(@PathVariable("id") String id) {
         return articlecommentService.getArticleComment(id);
