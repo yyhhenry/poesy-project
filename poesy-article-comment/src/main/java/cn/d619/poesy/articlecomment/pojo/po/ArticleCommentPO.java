@@ -29,6 +29,5 @@ public class ArticleCommentPO {
         this.content = content;
         this.authorEmail = authorEmail;
         this.articleId = articleId;
-
     }
 }

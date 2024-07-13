@@ -23,11 +23,5 @@ public class AddArticleCommentDTO {
         this.articleId = articleId;
         this.createdTime = createdTime;
     }
-      public GetArticleCommentByArticleIdDTO(String id, String content, String authorEmail,
-        LocalDateTime createdTime) {
-        this.id = id;
-        this.content = content;
-        this.authorEmail = authorEmail;
-        this.createdTime = createdTime;
-    }
+
 }

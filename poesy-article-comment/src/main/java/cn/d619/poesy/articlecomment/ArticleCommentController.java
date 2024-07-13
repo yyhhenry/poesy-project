@@ -2,8 +2,6 @@ package cn.d619.poesy.articlecomment;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDateTime;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,9 +10,8 @@ import org.springframework.http.HttpStatus;
 import cn.d619.poesy.articlecomment.service.ArticleCommentService;
 import cn.d619.poesy.articlecomment.util.JwtUtil;
 import cn.d619.poesy.articlecomment.pojo.dto.AddArticleCommentDTO;
+import cn.d619.poesy.articlecomment.pojo.dto.ListCommentDTO;
 import cn.d619.poesy.articlecomment.pojo.dto.MsgDTO;
-import cn.d619.poesy.articlecomment.pojo.dto.PaginationRequest;
-import cn.d619.poesy.articlecomment.pojo.po.ArticleCommentPO;
 import cn.d619.poesy.articlecomment.exception.HttpException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,7 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 @RestController
 public class ArticleCommentController {
     @Autowired
-    private ArticleCommentService articlecommentService;
+    private ArticleCommentService articleCommentService;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -37,21 +34,15 @@ public class ArticleCommentController {
         jwtUtil.validateTokenWithType(token, "access");
 
         String authorEmail = jwtUtil.getEmailFromToken(token);
-        String id = addArticleCommentDTO.getArticleId();
         String content = addArticleCommentDTO.getContent();
         String articleId = addArticleCommentDTO.getArticleId();
-        LocalDateTime createdTime = addArticleCommentDTO.getCreatedTime();
-        articlecommentService.addArticleComment(content, authorEmail, articleId);
+        articleCommentService.addArticleComment(content, authorEmail, articleId);
         return new MsgDTO("评论上传成功");
     }
 
-    @GetMapping("/api/article-comment/{id}")
-    public ArticleCommentPO getArticleComment(@PathVariable("id") String id) {
-        return articlecommentService.getArticleComment(id);
+    @GetMapping("/api/article-comment/by-article/{id}")
+    public ListCommentDTO articleCommentsBy(@PathVariable("id") String id) {
+        return new ListCommentDTO(articleCommentService.getCommentsByArticle(id));
     }
 
-
-    @GetMapping("/api/article-comment/by-article/{id}")
-   public ArticleCommentPO getArticleComment(@PathVariable("id") String id) {
-        return articlecommentService. getCommentByarticleId(id);
 }
