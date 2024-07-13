@@ -30,7 +30,7 @@ public class AnswerController {
         this.answerService = answerService;
     }
 
-    @PostMapping("/api/question/upload")
+    @PostMapping("/upload")
     public UploadDTO addAnswer(@RequestBody AddAnswerDTO addAnswerDTO,
             @RequestHeader("Authorization") String auth) {
         if (auth == null || !auth.startsWith("Bearer ")) {
@@ -46,7 +46,7 @@ public class AnswerController {
         return new UploadDTO(answerService.addAnswer(questionId, content, authorEmail));
     }
 
-    @GetMapping("/api/by-question/{id}")
+    @GetMapping("/by-question/{id}")
     public ListAnswerDTO getAnswer(@PathVariable("id") String id) {
         return answerService.getAnswerByQuestion(id);
     }

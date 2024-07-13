@@ -39,3 +39,7 @@ spring:
           uri: lb://poesy-qwen
           predicates:
             - Path=/api/qwen/**
+        - id: poesy-answer
+          uri: lb://poesy-answer
+          predicates:
+            - Path=/api/answer/**
