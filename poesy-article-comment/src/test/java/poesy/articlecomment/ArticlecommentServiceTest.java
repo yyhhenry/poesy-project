@@ -19,15 +19,14 @@ public class ArticlecommentServiceTest {
     @Test
     void testAddArticleComment() {
         String email = "test@example.com";
-        LocalDateTime timestamp = LocalDateTime.now();
-        articlecommentService.addArticleComment("content", email, "articleId");
+
+        articlecommentService.addArticleComment("content", "3454485202@qq.com", "123");
 
     }
 
     @Test
     void testGetArticleComment() {
-        ArticleCommentPO articlecommentPO = new ArticleCommentPO();
-
-        articlecommentService.getArticleComment("id");
+        ArticleCommentPO articlecomment = articlecommentService.getArticleComment("id");
+        System.out.println(articlecomment);
     }
 }
