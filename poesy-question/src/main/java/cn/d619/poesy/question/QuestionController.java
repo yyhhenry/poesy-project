@@ -17,6 +17,7 @@ import cn.d619.poesy.question.pojo.po.QuestionPO;
 import cn.d619.poesy.question.exception.HttpException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import java.util.List;
 
 @RestController
 public class QuestionController {
@@ -43,12 +44,17 @@ public class QuestionController {
     }
 
     @GetMapping("/api/question/by-user")
-    public QuestionBriefDTO[] questionsBy(@RequestParam("email") String email, @RequestParam("page") int page,
+    public List<QuestionBriefDTO> questionsBy(@RequestParam("email") String email, @RequestParam("page") int page,
             @RequestParam("size") int size,
             @RequestHeader("Authorization") String auth) {
+        if (auth == null || !auth.startsWith("Bearer ")) {
+            throw new HttpException(HttpStatus.UNAUTHORIZED, "Missing or invalid token");
+        }
+        PaginationRequest paginationrequest = new PaginationRequest(page, size);
 
-        /// TODO
-        throw new UnsupportedOperationException();
+        return questionService.questionsBy(paginationrequest, email);
+
+        // throw new UnsupportedOperationException();
     }
 
     @GetMapping("/api/question/{id}")
@@ -57,7 +63,7 @@ public class QuestionController {
     }
 
     @GetMapping("/api/question/latest")
-    public QuestionBriefDTO[] latestQuestions(@RequestBody PaginationRequest paginationRequest) {
+    public List<QuestionBriefDTO> latestQuestions(@RequestBody PaginationRequest paginationRequest) {
         return questionService.latestQuestions(paginationRequest);
     }
 }
