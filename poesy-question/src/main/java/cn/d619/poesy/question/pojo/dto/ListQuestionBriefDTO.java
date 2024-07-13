@@ -1,9 +1,8 @@
 package cn.d619.poesy.question.pojo.dto;
 
 import lombok.Data;
-import cn.d619.poesy.question.pojo.dto.QuestionBriefDTO;
+
 import java.util.List;
-import lombok.Data;
 
 @Data
 public class ListQuestionBriefDTO {
