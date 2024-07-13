@@ -1,6 +1,7 @@
 package cn.d619.poesy.answer.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import cn.d619.poesy.answer.pojo.po.AnswerPO;
@@ -10,5 +11,7 @@ public interface AnswerMapper extends BaseMapper<AnswerPO> {
     AnswerPO selectById(String id);
 
     AnswerPO insertAnswerPO(AnswerPO answerPO);
+
+    AnswerPO selectByQuestionId(@Param("questionId") String questionId);
 
 }

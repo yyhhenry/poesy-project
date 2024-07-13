@@ -1,4 +1,4 @@
-package cn.d619.poesy.answer.dto;
+package cn.d619.poesy.answer.pojo.dto;
 
 import java.time.LocalDateTime;
 import cn.d619.poesy.user.dto.UserDTO;

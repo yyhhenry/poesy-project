@@ -22,4 +22,8 @@ public class AnswerService {
     public AnswerPO addAnswer(AnswerPO answerPO) {
         return answerMapper.insertAnswerPO(answerPO);
     }
+
+    public AnswerPO getAnswerByQuestion(String questionId) {
+        return answerMapper.selectByQuestionId(questionId);
+    }
 }

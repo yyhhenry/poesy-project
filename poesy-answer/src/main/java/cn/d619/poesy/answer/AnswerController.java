@@ -15,7 +15,6 @@ public class AnswerController {
     @Autowired
     private AnswerService answerService;
 
-    @Autowired
     public AnswerController(AnswerService answerService) {
         this.answerService = answerService;
     }
@@ -26,13 +25,14 @@ public class AnswerController {
         return ResponseEntity.status(HttpStatus.CREATED).body(addedAnswer);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<AnswerPO> findAnswerById(@PathVariable String id) {
-        AnswerPO answer = answerService.getAnswer(id);
+    @GetMapping("/by-question/{id}")
+    public ResponseEntity<AnswerPO> getAnswerByQuestion(@PathVariable("id") String id) {
+        AnswerPO answer = answerService.getAnswerByQuestion(id);
         if (answer == null) {
             return ResponseEntity.notFound().build();
         } else {
             return ResponseEntity.ok(answer);
         }
     }
+
 }
