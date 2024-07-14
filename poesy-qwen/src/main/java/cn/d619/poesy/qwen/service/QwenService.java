@@ -1,27 +1,29 @@
 package cn.d619.poesy.qwen.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import cn.d619.poesy.qwen.pojo.dto.OllamaRequest;
 import cn.d619.poesy.qwen.pojo.dto.OllamaResponse;
+import reactor.core.publisher.Flux;
 
 @Service
 public class QwenService {
 
+    @Value("${OLLAMA_URL}")
+    private String ollamaUrl;
+
     @Autowired
-    private RestTemplate restTemplate;
+    private WebClient.Builder webClientBuilder;
 
-    public OllamaResponse accessOllama(OllamaRequest request) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<OllamaRequest> entity = new HttpEntity<>(request, headers);
-        String ollamaUrl = "http://localhost:11434/api/generate";
-
-        return restTemplate.postForObject(ollamaUrl, entity, OllamaResponse.class);
+    public Flux<OllamaResponse> accessOllama(OllamaRequest request) {
+        WebClient webClient = webClientBuilder.baseUrl(ollamaUrl).build();
+        return webClient.post()
+                .uri("/api/generate")
+                .bodyValue(request)
+                .retrieve()
+                .bodyToFlux(OllamaResponse.class);
     }
 }

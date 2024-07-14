@@ -9,13 +9,11 @@ public class OllamaRequest {
     private boolean stream;
 
     public OllamaRequest() {
-        this.model = "qwen2";
-        this.stream = false;
     }
 
-    public OllamaRequest(String prompt) {
-        this.model = "qwen2";
+    public OllamaRequest(String model, String prompt, boolean stream) {
+        this.model = model;
         this.prompt = prompt;
-        this.stream = false;
+        this.stream = stream;
     }
 }

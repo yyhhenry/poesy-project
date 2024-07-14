@@ -1,18 +1,18 @@
 package cn.d619.poesy.qwen.exception;
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.reactive.function.server.ServerResponse;
 import cn.d619.poesy.qwen.pojo.dto.ErrorDTO;
+import reactor.core.publisher.Mono;
 
-@ControllerAdvice
-public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+@RestControllerAdvice
+public class GlobalExceptionHandler {
 
     @ExceptionHandler(HttpException.class)
-    public ResponseEntity<ErrorDTO> handleAuthException(HttpException e) {
-        return ResponseEntity.status(e.getStatus()).body(new ErrorDTO(e.getMessage()));
+    public Mono<ServerResponse> handleAuthException(HttpException e) {
+        ErrorDTO errorDTO = new ErrorDTO(e.getMessage());
+        return ServerResponse.status(e.getStatus()).bodyValue(errorDTO);
     }
 
 }
